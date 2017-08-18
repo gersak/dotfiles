@@ -1,0 +1,44 @@
+#!/bin/bash
+# RC files
+
+cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
+
+# files=( "/etc/passwd" "/etc/group" "/etc/hosts" )
+# for i in "${files[@]}"
+# do
+#     echo $i
+# done
+# 
+# array =( "one" "two" "three" )
+# 
+# printf "%s\n" "${array[@]}"
+# 
+#             exiftool doxygen liboauth  fish git graphviz 
+packages=( "ag" "ripgrep" "ant" "cmus" "coreutils" "cscope" \)
+           "imagemagick" "boot-clj" "sbt" "maven" "ranger" "tree" "vim" "wget" \
+           "zsh" "jq" "macvim" "ruby" "python" "go" "highlight"\
+           "node" "npm" "reattach-to-user-namespace" "neovim" );
+
+if [ "$(uname -s)" = 'Darwin' ]; then
+  for p in "${packages[@]}"
+    do
+    :
+    brew uninstall --force $p
+  done
+  # brew uninstall \
+  #   ag ripgrep ant cmus coreutils cscope exiftool doxygen liboauth \
+  #   fish git graphviz imagemagick leiningen boot sbt \
+  #   maven ranger tree vim wget zsh jq macvim ruby python \
+  #   go highlight reattach-to-user-namespace vim neovim
+  brew uninstall gnuplot
+
+  # Patched version of tmux
+  brew tap waltarix/homebrew-customs
+  brew uninstall waltarix/homebrew-customs/tmux
+fi
+
+rm -f ~/.tmux.conf
+rm -rf ~/.vim/
+rm -rf ~/.vimrc
+
+./install-vim
