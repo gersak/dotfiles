@@ -74,7 +74,7 @@ alias hc="history -c"
 alias which='type -p'
 alias k5='kill -9 %%'
 alias gs='git status'
-alias gv='vim +GV +"autocmd BufWipeout <buffer> qall"'
+alias gv='nvim +GV +"autocmd BufWipeout <buffer> qall"'
 ext() {
   ext-all --exclude .git --exclude target --exclude "*.log"
 }
@@ -116,7 +116,7 @@ tpingping() {
 
 ### Colored ls
 if [ -x /usr/bin/dircolors ]; then
-  eval "`dircolors -b`"
+  eval `dircolors -b "$HOME/.dir_colors" | head -n 1`
   alias ls='ls --color=auto'
   alias grep='grep --color=auto'
 elif [ "$PLATFORM" = Darwin ]; then
@@ -457,7 +457,7 @@ v() {
   files=$(grep '^>' ~/.viminfo | cut -c3- |
           while read line; do
             [ -f "${line/\~/$HOME}" ] && echo "$line"
-          done | fzf -d -m -q "$*" -1) && vim ${files//\~/$HOME}
+          done | fzf -d -m -q "$*" -1) && nvim ${files//\~/$HOME}
 }
 
 # c - browse chrome history
