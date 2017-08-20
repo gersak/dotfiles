@@ -1,8 +1,3 @@
-# .bashrc for OS X and Ubuntu
-# ====================================================================
-# - https://github.com/junegunn/dotfiles
-# - junegunn.c@gmail.com
-
 # System default
 # --------------------------------------------------------------------
 
@@ -47,7 +42,7 @@ if [ -z "$PATH_EXPANDED" ]; then
   export PATH=~/bin:~/ruby:/opt/bin:/usr/local/bin:/usr/local/share/python:$GOPATH/bin:/usr/local/opt/go/libexec/bin:$PATH
   export PATH_EXPANDED=1
 fi
-export EDITOR=vim
+export EDITOR=nvim
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 [ "$PLATFORM" = 'Darwin' ] ||
@@ -74,7 +69,7 @@ alias hc="history -c"
 alias which='type -p'
 alias k5='kill -9 %%'
 alias gs='git status'
-alias gv='nvim +GV +"autocmd BufWipeout <buffer> qall"'
+alias gv='vim +GV +"autocmd BufWipeout <buffer> qall"'
 ext() {
   ext-all --exclude .git --exclude target --exclude "*.log"
 }
@@ -457,7 +452,7 @@ v() {
   files=$(grep '^>' ~/.viminfo | cut -c3- |
           while read line; do
             [ -f "${line/\~/$HOME}" ] && echo "$line"
-          done | fzf -d -m -q "$*" -1) && nvim ${files//\~/$HOME}
+          done | fzf -d -m -q "$*" -1) && vim ${files//\~/$HOME}
 }
 
 # c - browse chrome history
