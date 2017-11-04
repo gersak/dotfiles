@@ -36,6 +36,7 @@ export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
 [ -z "$TMPDIR" ] && TMPDIR=/tmp
 
 ### Global
+export PATH=~/Library/Python/3.6/bin:$PATH
 export GOPATH=~/gosrc
 mkdir -p $GOPATH
 if [ -z "$PATH_EXPANDED" ]; then
@@ -349,7 +350,7 @@ fco() {
     git branch --all | grep -v HEAD             |
     sed "s/.* //"    | sed "s#remotes/[^/]*/##" |
     sort -u          | awk '{print "\x1b[34;1mbranch\x1b[m\t" $1}') || return
-  target=$(
+    target=$(
     (echo "$tags"; echo "$branches") | sed '/^$/d' |
     fzf-down --no-hscroll --reverse --ansi +m -d "\t" -n 2 -q "$*") || return
   git checkout $(echo "$target" | awk '{print $2}')
@@ -546,3 +547,7 @@ fi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 export TERM=screen-256color
+export ABBY=/Users/robi/ABBY/
+
+export PATH=$PATH:$ABBY
+# export TERM=xterm-256color

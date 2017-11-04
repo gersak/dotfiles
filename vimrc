@@ -1,3 +1,4 @@
+"
 " Vim 8 defaults
 unlet! skip_defaults_vim
 silent! source $VIMRUNTIME/defaults.vim
@@ -17,30 +18,24 @@ silent! if plug#begin('~/.vim/plugged')
 "   let $GIT_SSL_NO_VERIFY = 'true'
 " endif
 
-" My plugins
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
 Plug 'junegunn/vim-emoji'
 " Plug 'junegunn/vim-pseudocl'
-" Plug 'junegunn/vim-slash'
 " Plug 'junegunn/vim-fnr'
 Plug 'junegunn/vim-peekaboo'
+" Plug 'junegunn/vim-slash'
 " Plug 'junegunn/vim-journal'
-Plug 'junegunn/seoul256.vim'
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/fzf',        { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Plug 'junegunn/rainbow_parentheses.vim'
-" Plug 'junegunn/heytmux'
-" Plug 'junegunn/vim-after-object'
 " Plug 'junegunn/vim-xmark'
 
 " Colors
-Plug 'tomasr/molokai'
-Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'morhetz/gruvbox'
+Plug 'rafi/awesome-vim-colorschemes'
 
 " Edit
 Plug 'tpope/vim-repeat'
@@ -60,23 +55,29 @@ Plug 'scrooloose/nerdtree'
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'mhinz/vim-signify'
+" Plug 'mhinz/vim-signify'
+Plug 'sheerun/vim-polyglot'
+Plug 'airblade/vim-gitgutter'
 
 " Clojure
-Plug 'clojure-vim/async-clj-omni'
+" Plug 'clojure-vim/async-clj-omni'
 Plug 'guns/vim-sexp'
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'tpope/vim-salve', { 'for': 'clojure' }
-Plug 'guns/vim-clojure-static'
-Plug 'guns/vim-clojure-highlight'
+" Plug 'guns/vim-clojure-static'
+" Plug 'guns/vim-clojure-highlight'
+
+" Css
 Plug 'ap/vim-css-color'
+
+" Javascript
 Plug 'pangloss/vim-javascript'
 
 " Others
 " Plug 'mxw/vim-jsx'
 " Plug 'solarnz/thrift.vim'
-" Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
+Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 
 " Lint
 " Plug 'metakirby5/codi.vim'
@@ -125,7 +126,7 @@ set virtualedit=block
 set nojoinspaces
 set diffopt=filler,vertical
 set autoread
-set clipboard=unnamed
+" set clipboard=unnamed
 set foldlevelstart=99
 set grepformat=%f:%l:%c:%m,%f:%l:%m
 set completeopt=menuone,preview
@@ -144,6 +145,7 @@ if has('patch-7.4.338')
 endif
 
 if has('termguicolors')
+  " echo 'Setting termguicolors'
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
   let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
   set termguicolors
@@ -251,7 +253,7 @@ silent! if emoji#available()
   set statusline=%!MyStatusLine()
 endif
 
-set pastetoggle=<F9>
+" set pastetoggle=<F9>
 set modelines=2
 set synmaxcol=1000
 
@@ -350,9 +352,10 @@ nnoremap <silent>tt :TagbarToggle<cr>
 let g:tagbar_sort = 0
 
 " jk | Escaping!
-inoremap jk <Esc>
-xnoremap jk <Esc>
-cnoremap jk <C-c>
+" inoremap jk <Esc>
+" xnoremap jk <Esc>
+" cnoremap jk <C-c>
+
 
 " Movement in insert mode
 inoremap <C-h> <C-o>h
@@ -365,6 +368,8 @@ inoremap <C-^> <C-o><C-^>
 nnoremap Y y$
 
 " qq to record, Q to replay
+nnoremap <Leader>q q
+nnoremap q <Esc>
 nnoremap Q @q
 
 " Zoom
@@ -509,29 +514,28 @@ cnoremap        <M-f> <S-Right>
 silent! exe "set <S-Left>=\<Esc>b"
 silent! exe "set <S-Right>=\<Esc>f"
 
-" " ----------------------------------------------------------------------------
-" " #gi / #gpi | go to next/previous indentation level
-" " ----------------------------------------------------------------------------
-" function! s:go_indent(times, dir)
-"   for _ in range(a:times)
-"     let l = line('.')
-"     let x = line('$')
-"     let i = s:indent_len(getline(l))
-"     let e = empty(getline(l))
-
-"     while l >= 1 && l <= x
-"       let line = getline(l + a:dir)
-"       let l += a:dir
-"       if s:indent_len(line) != i || empty(line) != e
-"         break
-"       endif
-"     endwhile
-"     let l = min([max([1, l]), x])
-"     execute 'normal! '. l .'G^'
-"   endfor
-" endfunction
-" nnoremap <silent> gi :<c-u>call <SID>go_indent(v:count1, 1)<cr>
-" noremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
+" ----------------------------------------------------------------------------
+" #gi / #gpi | go to next/previous indentation level
+" ----------------------------------------------------------------------------
+function! s:go_indent(times, dir)
+  for _ in range(a:times)
+    let l = line('.')
+    let x = line('$')
+    let i = s:indent_len(getline(l))
+    let e = empty(getline(l))
+    while l >= 1 && l <= x
+      let line = getline(l + a:dir)
+      let l += a:dir
+      if s:indent_len(line) != i || empty(line) != e
+        break
+      endif
+    endwhile
+    let l = min([max([1, l]), x])
+    execute 'normal! '. l .'G^'
+  endfor
+endfunction
+nnoremap <silent> gi :<c-u>call <SID>go_indent(v:count1, 1)<cr>
+noremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
 
 " " ----------------------------------------------------------------------------
 " " <leader>bs | buf-search
@@ -564,46 +568,46 @@ silent! exe "set <S-Right>=\<Esc>f"
 " " ----------------------------------------------------------------------------
 " command! -nargs=1 Count execute printf('%%s/%s//gn', escape(<q-args>, '/')) | normal! ``
 
-" " ----------------------------------------------------------------------------
-" " :CopyRTF
-" " ----------------------------------------------------------------------------
-" function! s:colors(...)
-"   return filter(map(filter(split(globpath(&rtp, 'colors/*.vim'), "\n"),
-"         \                  'v:val !~ "^/usr/"'),
-"         \           'fnamemodify(v:val, ":t:r")'),
-"         \       '!a:0 || stridx(v:val, a:1) >= 0')
-" endfunction
+" ----------------------------------------------------------------------------
+" :CopyRTF
+" ----------------------------------------------------------------------------
+function! s:colors(...)
+  return filter(map(filter(split(globpath(&rtp, 'colors/*.vim'), "\n"),
+        \                  'v:val !~ "^/usr/"'),
+        \           'fnamemodify(v:val, ":t:r")'),
+        \       '!a:0 || stridx(v:val, a:1) >= 0')
+endfunction
 
-" function! s:copy_rtf(line1, line2, ...)
-"   let [ft, cs, nu] = [&filetype, g:colors_name, &l:nu]
-"   let lines = getline(1, '$')
+function! s:copy_rtf(line1, line2, ...)
+  let [ft, cs, nu] = [&filetype, g:colors_name, &l:nu]
+  let lines = getline(1, '$')
 
-"   tab new
-"   setlocal buftype=nofile bufhidden=wipe nonumber
-"   let &filetype = ft
-"   call setline(1, lines)
+  tab new
+  setlocal buftype=nofile bufhidden=wipe nonumber
+  let &filetype = ft
+  call setline(1, lines)
 
-"   execute 'colo' get(a:000, 0, 'seoul256-light')
-"   hi Normal ctermbg=NONE guibg=NONE
+  execute 'colo' get(a:000, 0, 'seoul256-light')
+  hi Normal ctermbg=NONE guibg=NONE
 
-"   let lines = getline(a:line1, a:line2)
-"   let indent = repeat(' ', min(map(filter(copy(lines), '!empty(v:val)'), 'len(matchstr(v:val, "^ *"))')))
-"   call setline(a:line1, map(lines, 'substitute(v:val, indent, "", "")'))
+  let lines = getline(a:line1, a:line2)
+  let indent = repeat(' ', min(map(filter(copy(lines), '!empty(v:val)'), 'len(matchstr(v:val, "^ *"))')))
+  call setline(a:line1, map(lines, 'substitute(v:val, indent, "", "")'))
 
-"   call tohtml#Convert2HTML(a:line1, a:line2)
-"   g/^\(pre\|body\) {/s/background-color: #[0-9]*; //
-"   silent %write !textutil -convert rtf -textsizemultiplier 1.3 -stdin -stdout | pbcopy
+  call tohtml#Convert2HTML(a:line1, a:line2)
+  g/^\(pre\|body\) {/s/background-color: #[0-9]*; //
+  silent %write !textutil -convert rtf -textsizemultiplier 1.3 -stdin -stdout | pbcopy
 
-"   bd!
-"   tabclose
+  bd!
+  tabclose
 
-"   let &l:nu = nu
-"   execute 'colorscheme' cs
-" endfunction
+  let &l:nu = nu
+  execute 'colorscheme' cs
+endfunction
 
-" if s:darwin
-"   command! -range=% -nargs=? -complete=customlist,s:colors CopyRTF call s:copy_rtf(<line1>, <line2>, <f-args>)
-" endif
+if s:darwin
+  command! -range=% -nargs=? -complete=customlist,s:colors CopyRTF call s:copy_rtf(<line1>, <line2>, <f-args>)
+endif
 
 " " ----------------------------------------------------------------------------
 " " :Root | Change directory to the root of the Git repository
@@ -928,25 +932,25 @@ command! -bang Profile call s:profile(<bang>0)
 " endfunction
 
 
-" " ----------------------------------------------------------------------------
-" " Open FILENAME:LINE:COL
-" " ----------------------------------------------------------------------------
-" " function! s:goto_line()
-" "   let tokens = split(expand('%'), ':')
-" "   if len(tokens) <= 1 || !filereadable(tokens[0])
-" "     return
-" "   endif
+" ----------------------------------------------------------------------------
+" Open FILENAME:LINE:COL
+" ----------------------------------------------------------------------------
+" function! s:goto_line()
+"   let tokens = split(expand('%'), ':')
+"   if len(tokens) <= 1 || !filereadable(tokens[0])
+"     return
+"   endif
 
-" "   let file = tokens[0]
-" "   let rest = map(tokens[1:], 'str2nr(v:val)')
-" "   let line = get(rest, 0, 1)
-" "   let col  = get(rest, 1, 1)
-" "   bd!
-" "   silent execute 'e' file
-" "   execute printf('normal! %dG%d|', line, col)
-" " endfunction
+"   let file = tokens[0]
+"   let rest = map(tokens[1:], 'str2nr(v:val)')
+"   let line = get(rest, 0, 1)
+"   let col  = get(rest, 1, 1)
+"   bd!
+"   silent execute 'e' file
+"   execute printf('normal! %dG%d|', line, col)
+" endfunction
 
-" " autocmd vimrc BufNewFile * nested call s:goto_line()
+" autocmd vimrc BufNewFile * nested call s:goto_line()
 
 
 " " ----------------------------------------------------------------------------
@@ -1333,10 +1337,10 @@ let g:easy_align_delimiters = {
 \ }
 
 " Start interactive EasyAlign in visual mode
-" xmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
 
 " Start interactive EasyAlign with a Vim movement
-" nmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
 " nmap gaa ga_
 
 " xmap <Leader><Enter>   <Plug>(LiveEasyAlign)
@@ -1444,7 +1448,8 @@ augroup vimrc
   autocmd BufReadPost *.cljs command! -buffer Figwheel call s:figwheel()
 augroup END
 
-let g:clojure_maxlines = 60
+" let g:clojure_maxlines = 60
+let g:clojure_maxlines = 0
 
 set lispwords+=match
 let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
@@ -1536,23 +1541,26 @@ command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
 " nnoremap <silent> <Leader><Leader> :Files<CR>
-nnoremap <silent> <expr> <Leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
-nnoremap <silent> <Leader>C        :Colors<CR>
-nnoremap <silent>;  :Buffers<CR>
+nnoremap <silent>  <expr>     <Leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
+nnoremap <silent>  <Leader>C  :Colors<CR>
+nnoremap <silent>  <C-f>      :BLines<cr>
+nnoremap <silent>  <Leader>h  :Helptags<CR>
+nnoremap <silent>  <Leader>t  :Tags<CR>
+nnoremap <silent>; :Buffers<CR>
 " nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
-nnoremap <silent> <Leader>ag       :Ag <CR>
-nnoremap <silent> <Leader>AG       :Ag <C-R><C-A><CR>
-xnoremap <silent> <Leader>ag       y:Ag <C-R>"<CR>
-nnoremap <silent> <Leader>`        :Marks<CR>
+nnoremap <silent>  <Leader>ag :Ag       <CR>
+nnoremap <silent>  <Leader>AG :Ag       <C-R><C-A><CR>
+xnoremap <silent>  <Leader>ag y:Ag      <C-R>"<CR>
+nnoremap <silent>  <Leader>`  :Marks<CR>
 " nnoremap <silent> q: :History:<CR>
 " nnoremap <silent> q/ :History/<CR>
+" inoremap <expr> <c-x><c-t> fzf#complete('tmuxwords.rb --all-but-current --scroll 500 --min 5')
 
-inoremap <expr> <c-x><c-t> fzf#complete('tmuxwords.rb --all-but-current --scroll 500 --min 5')
-imap <c-x><c-k> <plug>(fzf-complete-word)
-imap <c-x><c-f> <plug>(fzf-complete-path)
-imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-imap <c-x><c-l> <plug>(fzf-complete-line)
-
+" imap <c-x><c-k> <plug>(fzf-complete-word)
+" imap <c-x><c-f> <plug>(fzf-complete-path)
+" imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+" imap <c-x><c-l> <plug>(fzf-complete-line)
+ 
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
@@ -1645,21 +1653,27 @@ endif
 
 " Gersak
 
+nmap <silent> <Leader>8 :nohlsearch<cr>
 nmap <C-t> :tabnew<cr>
 nmap L :tabnext<cr>
 nmap H :tabNext<cr>
 
-colorscheme gruvbox
 set tabstop=2
 set shiftwidth=2
 set diffopt+=iwhite
+
+hi Search guibg='Purple' guifg='NONE'
+
+set wildignore+=*/target/*,*/tmp/*,*.so,*.swp,*.zip,/.git     " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,\\.git  " Windows
+
 
 "
 au BufNewFile,BufRead *.edn set filetype=clojure
 au BufNewFile,BufRead *.boot set filetype=clojure
 let g:clojure_align_multiline_strings = 1
-let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,defui,routes'
-let g:clojure_fuzzy_indent_patterns=['^GET', '^POST', '^PUT', '^DELETE', '^ANY', '^HEAD', '^PATCH', '^OPTIONS', '^def', '^let', '^with', '^reg-', '^register-',  '^om', '^dom']
+let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,defui,routes,fn'
+let g:clojure_fuzzy_indent_patterns=['^GET', '^POST', '^PUT', '^DELETE', '^ANY', '^HEAD', '^PATCH', '^OPTIONS', '^def', '^let', '^with', '^reg-', '^register-',  '^om', '^dom', '^defui', '^fn']
 
 " Clojure test
 autocmd FileType clojure setlocal lispwords+=describe,it
@@ -1689,6 +1703,7 @@ autocmd FileType clojure setlocal lispwords+=with-context,alet,mlet
 " Clojure
 nmap <silent> <leader>r :Require<cr>
 nnoremap <leader>cr :Piggieback (adzerk.boot-cljs-repl/repl-env)<CR>
+nnoremap <leader>cn :Piggieback (cljs.repl.node/repl-env)<CR>
 
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
@@ -1703,3 +1718,11 @@ let g:EasyMotion_smartcase = 1
 " JK motions: Line motions
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
+
+
+let g:golden_ratio_autocommand = 0
+
+" colorscheme molokai
+colorscheme github
+" colorscheme dracula
+" colorscheme PaperColor
