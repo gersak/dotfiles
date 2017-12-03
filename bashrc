@@ -36,18 +36,10 @@ export HISTTIMEFORMAT="%Y/%m/%d %H:%M:%S:   "
 [ -z "$TMPDIR" ] && TMPDIR=/tmp
 
 ### Global
-export PATH=~/Library/Python/3.6/bin:$PATH
-export GOPATH=~/gosrc
-mkdir -p $GOPATH
-if [ -z "$PATH_EXPANDED" ]; then
-  export PATH=~/bin:~/ruby:/opt/bin:/usr/local/bin:/usr/local/share/python:$GOPATH/bin:/usr/local/opt/go/libexec/bin:$PATH
-  export PATH_EXPANDED=1
-fi
 export EDITOR=nvim
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 [ "$PLATFORM" = 'Darwin' ] ||
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:.:/usr/local/lib
 
 ### OS X
 export COPYFILE_DISABLE=true
@@ -417,12 +409,12 @@ fs() {
 }
 
 # Z integration
-source "$BASE/z.sh"
-unalias z 2> /dev/null
-z() {
-  [ $# -gt 0 ] && _z "$*" && return
-  cd "$(_z -l 2>&1 | fzf --height 40% --reverse --inline-info +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
-}
+# source "$BASE/z.sh"
+# unalias z 2> /dev/null
+# z() {
+#   [ $# -gt 0 ] && _z "$*" && return
+#   cd "$(_z -l 2>&1 | fzf --height 40% --reverse --inline-info +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
+# }
 
 # v - open files in ~/.viminfo
 v() {
@@ -525,7 +517,9 @@ fi
 
 #export TERM=screen-256color
 export TERM=xterm-256color
-export ABBY=/Users/robi/ABBY/
+# export TERM=screen-256color-bce
+# export ABBY=/Users/robi/ABBY/
+export NIX_ENV=~/.nix-profile/bin/
 
-export PATH=$PATH:$ABBY
+export PATH=$PATH:$NIX_ENV
 # export TERM=xterm-256color
