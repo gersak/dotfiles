@@ -84,14 +84,6 @@ ext-all() {
 temp() {
   vim +"set buftype=nofile bufhidden=wipe nobuflisted noswapfile tw=${1:-0}"
 }
-
-if [ "$PLATFORM" = 'Darwin' ]; then
-  alias tac='tail -r'
-  o() {
-    open --reveal "${1:-.}"
-  }
-fi
-
 ### Tmux
 alias tmux="tmux -2"
 alias tmuxls="ls $TMPDIR/tmux*/"
@@ -254,21 +246,6 @@ EXTRA=$BASE/bashrc-extra
 [ -f "$EXTRA" ] && source "$EXTRA"
 
 
-if [ "$PLATFORM" = 'Darwin' ]; then
-  resizes() {
-    mkdir -p out &&
-    for jpg in *.JPG; do
-      echo $jpg
-      [ -e out/$jpg ] || sips -Z 2048 --setProperty formatOptions 80 $jpg --out out/$jpg
-    done
-  }
-
-  j() { export JAVA_HOME=$(/usr/libexec/java_home -v1.$1); }
-
-  # https://gist.github.com/Andrewpk/7558715
-  alias startvpn="sudo launchctl load -w /Library/LaunchDaemons/net.juniper.AccessService.plist; open -a '/Applications/Junos Pulse.app/Contents/Plugins/JamUI/PulseTray.app/Contents/MacOS/PulseTray'"
-  alias quitvpn="osascript -e 'tell application \"PulseTray.app\" to quit';sudo launchctl unload -w /Library/LaunchDaemons/net.juniper.AccessService.plist"
-fi
 
 jfr() {
   if [ $# -ne 1 ]; then
@@ -546,7 +523,8 @@ fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-export TERM=screen-256color
+#export TERM=screen-256color
+export TERM=xterm-256color
 export ABBY=/Users/robi/ABBY/
 
 export PATH=$PATH:$ABBY

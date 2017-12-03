@@ -3,6 +3,8 @@ unlet! skip_defaults_vim
 " Vim 8 defaults
 silent! source $VIMRUNTIME/defaults.vim
 
+set t_Co=256
+
 " }}}
 " ============================================================================
 " VIM-PLUG BLOCK {{{
@@ -22,6 +24,7 @@ Plug 'junegunn/fzf.vim'
 
 " Colors
 Plug 'rafi/awesome-vim-colorschemes'
+Plug 'yuttie/comfortable-motion.vim'
 
 " Edit
 Plug 'tpope/vim-rsi'
