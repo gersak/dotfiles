@@ -1,9 +1,4 @@
 #!/bin/bash
-#
-# Junegunn Choi (junegunn.c@gmail.com)
-# 2011/05/25-
-
-# RC files
 
 cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
 
@@ -28,7 +23,9 @@ done
 
 
 
-nix-env -iA nixpkgs.neovim boot nixpkgs.python35Packages.neovim nixos.openjdk ripgrep tmux
+nix-env -iA nixpkgs.neovim nixpkgs.boot nixpkgs.python35Packages.neovim \
+            nixpkgs.openjdk nixpkgs.ripgrep nixpkgs.tmux nixpkgs.fzf \
+            nixpkgs.nodejs-8_x nixpkgs.psqlodbc
 
 
 rm -f ~/.tmux.conf

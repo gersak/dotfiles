@@ -17,4 +17,3 @@ ln -sf $BASE/vimrc ~/.config/nvim/init.vim
 ln -sf ~/.vim/autoload/plug.vim ~/.config/nvim/autoload/
 
 vim +PlugInstall +qall
-

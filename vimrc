@@ -21,7 +21,7 @@ silent! if plug#begin('~/.vim/plugged')
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
-Plug 'junegunn/vim-emoji'
+" Plug 'junegunn/vim-emoji'
 " Plug 'junegunn/vim-pseudocl'
 " Plug 'junegunn/vim-fnr'
 Plug 'junegunn/vim-peekaboo'
@@ -144,6 +144,7 @@ if has('patch-7.4.338')
   set breakindentopt=sbr
 endif
 
+if has('termguicolors')
 if has('termguicolors')
   " echo 'Setting termguicolors'
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -1647,8 +1648,6 @@ let s:local_vimrc = fnamemodify(resolve(expand('<sfile>')), ':p:h').'/vimrc-extr
 if filereadable(s:local_vimrc)
   execute 'source' s:local_vimrc
 endif
-
-" }}}
 " ============================================================================
 
 " Gersak
@@ -1722,7 +1721,8 @@ map <Leader>k <Plug>(easymotion-k)
 
 let g:golden_ratio_autocommand = 0
 
+colorscheme OceanicNext
 " colorscheme molokai
-colorscheme github
+" colorscheme github
 " colorscheme dracula
 " colorscheme PaperColor
