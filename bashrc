@@ -94,30 +94,24 @@ tpingping() {
 }
 
 
-### Colored ls
-if [ -x /usr/bin/dircolors ]; then
-  eval `dircolors -b "$HOME/.dir_colors" | head -n 1`
-  alias ls='ls --color=auto'
-  alias grep='grep --color=auto'
-elif [ "$PLATFORM" = Darwin ]; then
-  alias ls='ls -G'
-fi
+# Colored ls
+# if [ -x /usr/bin/dircolors ]; then
+#   eval `dircolors -b "$HOME/.dir_colors" | head -n 1`
+#   alias ls='ls --color=auto'
+#   alias grep='grep --color=auto'
+# fi
 
 
 # Prompt
 # --------------------------------------------------------------------
 
-if [ "$PLATFORM" = Linux ]; then
-  PS1="\[\e[1;38m\]\u\[\e[1;34m\]@\[\e[1;31m\]\h\[\e[1;30m\]:"
-  PS1="$PS1\[\e[0;38m\]\w\[\e[1;35m\]> \[\e[0m\]"
-else
-  ### git-prompt
-  __git_ps1() { :;}
-  if [ -e ~/.git-prompt.sh ]; then
+__git_ps1() { :;}
+if [ -e ~/.git-prompt.sh ]; then
     source ~/.git-prompt.sh
   fi
-  PS1='\[\e[34m\]\u\[\e[1;32m\]@\[\e[0;33m\]\h\[\e[35m\]:\[\e[m\]\w\e[1;30m$(__git_ps1)\[\e[1;31m\]> \[\e[0m\]'
-fi
+
+# PS1='\[\e[34m\]\u\[\e[1;32m\]@\[\e[0;33m\]\h\[\e[35m\]:\[\e[m\]\w\e[1;30m$(__git_ps1)\[\e[1;31m\]> \[\e[0m\]\n'
+PS1='\[\e[34m\]\u\[\e[1;32m\]@\[\e[0;33m\]\h\[\e[35m\]:\[\e[m\]\w\e[1;31m$(__git_ps1)\[\e[1;31m\]> \[\e[m\]\n? '
 
 # Tmux tile
 # --------------------------------------------------------------------
@@ -515,10 +509,16 @@ fi
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-#export TERM=screen-256color
+
+TZ='Europe/Belgrade'; 
+export TZ
+
 export TERM=xterm-256color
+
+#export TERM=screen-256color
 # export TERM=screen-256color-bce
 # export ABBY=/Users/robi/ABBY/
+
 export NIX_ENV=~/.nix-profile/bin/
 
 export PATH=$PATH:$NIX_ENV

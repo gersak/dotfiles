@@ -3,6 +3,8 @@ unlet! skip_defaults_vim
 " Vim 8 defaults
 silent! source $VIMRUNTIME/defaults.vim
 
+set cursorline
+
 
 if (empty($TMUX))
   if (has("nvim"))
@@ -30,7 +32,7 @@ silent! if plug#begin('~/.vim/plugged')
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
-Plug 'junegunn/vim-emoji'
+" Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/limelight.vim'
@@ -94,7 +96,12 @@ let maplocalleader = '\'
 " augroup vimrc
 "   autocmd!
 " augroup END
-" 
+augroup CursorLine
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  au WinLeave * setlocal nocursorline
+augroup END"
+
 set nu
 set autoindent
 set smartindent
@@ -127,7 +134,7 @@ set autoread
 set foldlevelstart=99
 set grepformat=%f:%l:%c:%m,%f:%l:%m
 set completeopt=menuone,preview
-set nocursorline
+" set nocursorline
 set nrformats=hex
 " silent! set cryptmethod=blowfish2
 
@@ -162,7 +169,94 @@ endif
 " %V Virtual column
 " %P Percentage
 " %#HighlightGroup#
-" set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P
+set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P
+
+silent! if emoji#available()
+  let s:ft_emoji = map({
+    \ 'c':          'baby_chick',
+    \ 'clojure':    'lollipop',
+    \ 'coffee':     'coffee',
+    \ 'cpp':        'chicken',
+    \ 'css':        'art',
+    \ 'eruby':      'ring',
+    \ 'gitcommit':  'soon',
+    \ 'haml':       'hammer',
+    \ 'help':       'angel',
+    \ 'html':       'herb',
+    \ 'java':       'older_man',
+    \ 'javascript': 'monkey',
+    \ 'make':       'seedling',
+    \ 'markdown':   'book',
+    \ 'perl':       'camel',
+    \ 'python':     'snake',
+    \ 'ruby':       'gem',
+    \ 'scala':      'barber',
+    \ 'sh':         'shell',
+    \ 'slim':       'dancer',
+    \ 'text':       'books',
+    \ 'vim':        'poop',
+    \ 'vim-plug':   'electric_plug',
+    \ 'yaml':       'yum',
+    \ 'yaml.jinja': 'yum'
+  \ }, 'emoji#for(v:val)')
+
+  function! S_filetype()
+    if empty(&filetype)
+      return emoji#for('grey_question')
+    else
+      return get(s:ft_emoji, &filetype, '['.&filetype.']')
+    endif
+  endfunction
+
+  function! S_modified()
+    if &modified
+      return emoji#for('kiss').' '
+    elseif !&modifiable
+      return emoji#for('construction').' '
+    else
+      return ''
+    endif
+  endfunction
+
+  function! S_fugitive()
+    if !exists('g:loaded_fugitive')
+      return ''
+    endif
+    let head = fugitive#head()
+    if empty(head)
+      return ''
+    else
+      return head == 'master' ? emoji#for('crown') : emoji#for('dango').'='.head
+    endif
+  endfunction
+
+  let s:braille = split('"⠉⠒⠤⣀', '\zs')
+  function! Braille()
+    let len = len(s:braille)
+    let [cur, max] = [line('.'), line('$')]
+    let pos  = min([len * (cur - 1) / max([1, max - 1]), len - 1])
+    return s:braille[pos]
+  endfunction
+
+  hi def link User1 TablineFill
+  let s:cherry = emoji#for('cherry_blossom')
+  function! MyStatusLine()
+    let mod = '%{S_modified()}'
+    let ro  = "%{&readonly ? emoji#for('lock') . ' ' : ''}"
+    let ft  = '%{S_filetype()}'
+    let fug = ' %{S_fugitive()}'
+    let sep = ' %= '
+    let pos = ' %l,%c%V '
+    let pct = ' %P '
+
+    return s:cherry.' [%n] %F %<'.mod.ro.ft.fug.sep.pos.'%{Braille()}%*'.pct.s:cherry
+  endfunction
+
+  " Note that the "%!" expression is evaluated in the context of the
+  " current window and buffer, while %{} items are evaluated in the
+  " context of the window that the statusline belongs to.
+  set statusline=%!MyStatusLine()
+endif
 
 " set pastetoggle=<F9>
 set modelines=2
@@ -692,7 +786,7 @@ augroup vimrc
 augroup END
 
 " let g:clojure_maxlines = 60
-let g:clojure_maxlines = 0
+let g:clojure_maxlines =  300
 
 set lispwords+=match
 let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
@@ -763,6 +857,7 @@ autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#keyword_patterns = {}
 let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
+let g:deoplete#auto_complete_start_length=4
 
 " ----------------------------------------------------------------------------
 " gruvbox
