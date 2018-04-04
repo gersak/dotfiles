@@ -14,7 +14,7 @@ hi       Normal ctermfg=0     ctermbg=255 guifg=#000000 guibg=#ffffff
 hi       Cursor ctermfg=239    ctermbg=15 guifg=#F8F8FF guibg=#444454
 hi       Visual ctermfg=15     ctermbg=61 guifg=#FFFFFF guibg=#3465a3
 hi    VisualNOS ctermfg=15     ctermbg=24 guifg=#FFFFFF guibg=#204a87
-hi       Search ctermfg=236   ctermbg=228 guifg=#f0f0f0 guibg=#000000 cterm=underline      gui=underline
+hi       Search ctermfg=236   ctermbg=228 guifg=#204a87 guibg=#e8e8e8 cterm=underline      gui=underline
 hi       Folded ctermfg=8      ctermbg=15 guifg=#808080 guibg=#ECECEC gui=bold           cterm=bold
 hi        Title ctermfg=167 guifg=#ef5939
 hi   StatusLine ctermfg=238   ctermbg=250 guifg=#404040 guibg=#bbbbbb gui=bold           cterm=bold
@@ -30,9 +30,9 @@ hi  ColorColumn ctermbg=254 guibg=#e4e4e4
 " {{{ Vim => 7.0 specific colors
 if version >= 700
     hi CursorLine ctermbg=0 guibg=#ffffff cterm=underline gui=underline
-    hi MatchParen ctermfg=0     ctermbg=252 guifg=#000000 guibg=#cdcdfd
+    hi MatchParen ctermfg=0     ctermbg=252 guifg=#000000 guibg=#ABFFE3 gui=underline cterm=underline
     hi      Pmenu ctermfg=15      ctermbg=8 guifg=#ffffff guibg=#808080 gui=bold     cterm=bold
-    hi   PmenuSel ctermfg=0     ctermbg=252 guifg=#000000 guibg=#cdcdfd gui=italic cterm=italic
+    hi   PmenuSel ctermfg=0     ctermbg=252 guifg=#000000 guibg=#ABFFE3 gui=italic cterm=italic
     hi  PmenuSbar ctermfg=238     ctermbg=0 guifg=#444444 guibg=#000000
     hi PmenuThumb ctermfg=248   ctermbg=248 guifg=#aaaaaa guibg=#aaaaaa
 endif
@@ -46,17 +46,19 @@ hi DiffDelete ctermfg=252 ctermbg=224   guifg=#DDCCCC guibg=#FFDDDD gui=none    
 " }}}
 
 " {{{ Syntax highlighting
-hi      Special ctermfg=247   guifg=#A82EFF gui=bold         cterm=bold
-hi       Define ctermfg=247   guifg=#A82EFF gui=bold         cterm=bold
-" hi        Macro ctermfg=247 guifg=#A82EFF gui=bold         cterm=bold
+hi      Special ctermfg=247   guifg=#9400AB gui=bold         cterm=bold
+hi       Define ctermfg=247   guifg=#9400AB gui=bold         cterm=bold
 hi       Ignore ctermfg=8     guifg=#808080
 hi   Identifier ctermfg=31    guifg=#0086B3
-hi      PreProc ctermfg=247   guifg=#A82EFF gui=bold         cterm=bold
+hi      PreProc ctermfg=247   guifg=#9400AB gui=bold         cterm=bold
 hi      Comment ctermfg=246   guifg=#c3c3c3
 hi     Constant ctermfg=6     guifg=#0a63cf gui=none         cterm=none
 hi       String ctermfg=161   guifg=#007A00
-hi     Function ctermfg=88    guifg=#0A63CF gui=bold         cterm=bold
-hi    Statement ctermfg=0     guifg=#A82EFF gui=bold         cterm=bold
+"hi     Function ctermfg=88    guifg=#0A63CF gui=bold         cterm=bold
+hi     Function ctermfg=88    guifg=#0000FF
+" hi     Function ctermfg=88    guifg=#000f70
+" hi     Function ctermfg=88    guifg=#0A63CF
+hi    Statement ctermfg=0     guifg=#9400AB gui=bold         cterm=bold
 hi         Type ctermfg=60    guifg=#445588 gui=bold         cterm=bold
 hi       Number ctermfg=30    guifg=#0a63cf
 hi         Todo ctermbg=15      ctermfg=196 guibg=#f8f8ff guifg=#ff1100 gui=underline cterm=underline
@@ -64,7 +66,7 @@ hi        Label ctermfg=0     guifg=#000000 gui=bold         cterm=bold
 hi StorageClass ctermfg=0     guifg=#000000 gui=bold         cterm=bold
 hi    Structure ctermfg=0     guifg=#000000 gui=bold         cterm=bold
 hi      TypeDef ctermfg=0     guifg=#000000 gui=bold         cterm=bold
-hi  SpecialChar guifg=#FF9E00      gui=bold
+hi  SpecialChar guifg=#E68300 gui=bold
 
 
 " {{{ Clojure
