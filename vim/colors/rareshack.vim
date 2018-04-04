@@ -46,23 +46,30 @@ hi DiffDelete ctermfg=252 ctermbg=224   guifg=#DDCCCC guibg=#FFDDDD gui=none    
 " }}}
 
 " {{{ Syntax highlighting
-hi       Ignore ctermfg=8   guifg=#808080
-hi   Identifier ctermfg=31  guifg=#0086B3
-hi      PreProc ctermfg=247 guifg=#A82EFF gui=bold         cterm=bold
-hi      Comment ctermfg=246 guifg=#c3c3c3
-hi     Constant ctermfg=6   guifg=#0a63cf gui=none         cterm=none
-hi       String ctermfg=161 guifg=#007A00
-hi     Function ctermfg=88  guifg=#0A63CF gui=bold         cterm=bold
-hi    Statement ctermfg=0   guifg=#A82EFF gui=bold         cterm=bold
-hi         Type ctermfg=60  guifg=#445588 gui=bold         cterm=bold
-hi       Number ctermfg=30  guifg=#0a63cf
-hi      Special ctermfg=28  guifg=#7A5CFF gui=bold         cterm=bold
-hi         Todo ctermbg=15    ctermfg=196 guibg=#f8f8ff guifg=#ff1100 gui=underline cterm=underline
-hi        Label ctermfg=0   guifg=#000000 gui=bold         cterm=bold
-hi StorageClass ctermfg=0   guifg=#000000 gui=bold         cterm=bold
-hi    Structure ctermfg=0   guifg=#000000 gui=bold         cterm=bold
-hi      TypeDef ctermfg=0   guifg=#000000 gui=bold         cterm=bold
-hi      Keyword ctermfg=0   guifg=#A30A29 gui=bold         cterm=bold
+hi      Special ctermfg=247   guifg=#A82EFF gui=bold         cterm=bold
+hi       Define ctermfg=247   guifg=#A82EFF gui=bold         cterm=bold
+" hi        Macro ctermfg=247 guifg=#A82EFF gui=bold         cterm=bold
+hi       Ignore ctermfg=8     guifg=#808080
+hi   Identifier ctermfg=31    guifg=#0086B3
+hi      PreProc ctermfg=247   guifg=#A82EFF gui=bold         cterm=bold
+hi      Comment ctermfg=246   guifg=#c3c3c3
+hi     Constant ctermfg=6     guifg=#0a63cf gui=none         cterm=none
+hi       String ctermfg=161   guifg=#007A00
+hi     Function ctermfg=88    guifg=#0A63CF gui=bold         cterm=bold
+hi    Statement ctermfg=0     guifg=#A82EFF gui=bold         cterm=bold
+hi         Type ctermfg=60    guifg=#445588 gui=bold         cterm=bold
+hi       Number ctermfg=30    guifg=#0a63cf
+hi         Todo ctermbg=15      ctermfg=196 guibg=#f8f8ff guifg=#ff1100 gui=underline cterm=underline
+hi        Label ctermfg=0     guifg=#000000 gui=bold         cterm=bold
+hi StorageClass ctermfg=0     guifg=#000000 gui=bold         cterm=bold
+hi    Structure ctermfg=0     guifg=#000000 gui=bold         cterm=bold
+hi      TypeDef ctermfg=0     guifg=#000000 gui=bold         cterm=bold
+hi  SpecialChar guifg=#FF9E00      gui=bold
+
+
+" {{{ Clojure
+hi      Keyword ctermfg=0   guifg=#A30A29 
+hi    Delimiter ctermfg=28  guifg=#7A5CFF
 
 " {{{ Links
 hi! link FoldColumn Folded
