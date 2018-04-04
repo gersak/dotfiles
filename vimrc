@@ -5,6 +5,8 @@ silent! source $VIMRUNTIME/defaults.vim
 
 set cursorline
 
+let g:python_host_prog = '/usr/bin/python' 
+let g:python3_host_prog = '/usr/bin/python3' 
 
 if (empty($TMUX))
   if (has("nvim"))
@@ -44,17 +46,20 @@ Plug 'rafi/awesome-vim-colorschemes'
 " Plug 'yuttie/comfortable-motion.vim'
 
 " Edit
+Plug 'tpope/vim-sleuth' 
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-dadbod'
+Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdtree'
 
 " Plug 'justinmk/vim-gtfo'
 " Git
@@ -92,6 +97,8 @@ endif
 
 let mapleader      = '\'
 let maplocalleader = '\'
+" let mapleader = "\<Space>"
+" let maplocaleader = "\<Space>"
 
 " augroup vimrc
 "   autocmd!
@@ -311,7 +318,7 @@ endif
 " ============================================================================
 
 "  NERD Tree
-nnoremap <C-n> :NERDTreeFind<cr>
+" nnoremap <C-n> :NERDTreeFind<cr>
 
 "  Tagbar
 nnoremap <silent>tt :TagbarToggle<cr>
@@ -1010,8 +1017,9 @@ map <Leader>k <Plug>(easymotion-k)
 
 
 let g:golden_ratio_autocommand = 0
-colorscheme OceanicNext
-
+colorscheme rareshack
+" colorscheme happy_hacking
+" colorscheme OceanicNext
 " colorscheme molokai
 " colorscheme github
 " colorscheme dracula

@@ -61,7 +61,7 @@ alias vi2='vi -O2 '
 alias hc="history -c"
 alias which='type -p'
 alias k5='kill -9 %%'
-alias gs='git status'
+# alias gs='git status'
 alias gv='vim +GV +"autocmd BufWipeout <buffer> qall"'
 ext() {
   ext-all --exclude .git --exclude target --exclude "*.log"
@@ -513,13 +513,18 @@ fi
 TZ='Europe/Belgrade'; 
 export TZ
 
-export TERM=xterm-256color
+# export TERM=xterm-256color
 
-#export TERM=screen-256color
+# export TERM=screen-256color
 # export TERM=screen-256color-bce
 # export ABBY=/Users/robi/ABBY/
 
 export NIX_ENV=~/.nix-profile/bin/
+export TESSDATA_PREFIX=~/.nix-profile/share
 
-export PATH=$PATH:$NIX_ENV
+export PATH=$PATH:$NIX_ENV:$TESSERACT
 # export TERM=xterm-256color
+
+
+# alias development=`cd ~/development/`
+# alias roboti=`cd ~/development/roboti`
