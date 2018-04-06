@@ -54,10 +54,7 @@ hi      PreProc ctermfg=247   guifg=#9400AB gui=bold         cterm=bold
 hi      Comment ctermfg=246   guifg=#c3c3c3
 hi     Constant ctermfg=6     guifg=#0a63cf gui=none         cterm=none
 hi       String ctermfg=161   guifg=#007A00
-"hi     Function ctermfg=88    guifg=#0A63CF gui=bold         cterm=bold
 hi     Function ctermfg=88    guifg=#0000FF
-" hi     Function ctermfg=88    guifg=#000f70
-" hi     Function ctermfg=88    guifg=#0A63CF
 hi    Statement ctermfg=0     guifg=#9400AB gui=bold         cterm=bold
 hi         Type ctermfg=60    guifg=#445588 gui=bold         cterm=bold
 hi       Number ctermfg=30    guifg=#0a63cf
