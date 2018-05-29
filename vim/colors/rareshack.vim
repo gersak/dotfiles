@@ -10,7 +10,8 @@ endif
 let colors_name = "rareshack"
 
 " {{{ General colors
-hi       Normal ctermfg=0     ctermbg=255 guifg=#000000 guibg=#ffffff
+" hi       Normal ctermfg=0     ctermbg=255 guifg=#000000 guibg=#ffffff
+hi       Normal ctermfg=0     ctermbg=255 guifg=#000000 guibg=#fffff7
 hi       Cursor ctermfg=239    ctermbg=15 guifg=#F8F8FF guibg=#444454
 hi       Visual ctermfg=15     ctermbg=61 guifg=#FFFFFF guibg=#3465a3
 hi    VisualNOS ctermfg=15     ctermbg=24 guifg=#FFFFFF guibg=#204a87
@@ -22,14 +23,14 @@ hi StatusLineNC ctermfg=238   ctermbg=252 guifg=#404040 guibg=#d4d4d4 gui=italic
 hi    VertSplit ctermfg=250   ctermbg=250 guifg=#bbbbbb guibg=#bbbbbb gui=none           cterm=none
 hi       LineNr ctermfg=246    ctermbg=15 guifg=#959595 guibg=#ECECEC gui=bold           cterm=bold
 hi   SpecialKey ctermfg=6   guifg=#177F80 gui=italic     cterm=italic
-hi   WarningMsg ctermfg=167 guifg=#ef5939
+hi   WarningMsg ctermfg=167 guifg=#ef5939 guibg=#000000
 hi     ErrorMsg ctermbg=15    ctermfg=196 guibg=#f8f8ff guifg=#ff1100 gui=undercurl cterm=undercurl
 hi  ColorColumn ctermbg=254 guibg=#e4e4e4
 " }}}
 
 " {{{ Vim => 7.0 specific colors
 if version >= 700
-    hi CursorLine ctermbg=0 guibg=#ffffff cterm=underline gui=underline
+    hi CursorLine ctermbg=0       guibg=NONE cterm=underline gui=underline
     hi MatchParen ctermfg=0     ctermbg=252 guifg=#000000 guibg=#ABFFE3 gui=underline cterm=underline
     hi      Pmenu ctermfg=15      ctermbg=8 guifg=#ffffff guibg=#808080 gui=bold     cterm=bold
     hi   PmenuSel ctermfg=0     ctermbg=252 guifg=#000000 guibg=#ABFFE3 gui=italic cterm=italic
@@ -69,6 +70,7 @@ hi  SpecialChar guifg=#E68300 gui=bold
 " {{{ Clojure
 hi      Keyword ctermfg=0   guifg=#A30A29 
 hi    Delimiter ctermfg=28  guifg=#7A5CFF
+hi    clojureError ctermfg=0 guibg=#ff1100 guifg=#ffffff
 
 " {{{ Links
 hi! link FoldColumn Folded

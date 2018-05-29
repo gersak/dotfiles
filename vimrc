@@ -3,7 +3,6 @@ unlet! skip_defaults_vim
 " Vim 8 defaults
 silent! source $VIMRUNTIME/defaults.vim
 
-set cursorline
 
 let g:python_host_prog = '/usr/bin/python' 
 let g:python3_host_prog = '/usr/bin/python3' 
@@ -33,7 +32,7 @@ silent! if plug#begin('~/.vim/plugged')
 
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
+" Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
 " Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/gv.vim'
@@ -110,6 +109,8 @@ augroup CursorLine
 augroup END"
 
 set nu
+set cursorline
+set nonumber
 set autoindent
 set smartindent
 set lazyredraw
@@ -761,9 +762,9 @@ nnoremap U :UndotreeToggle<CR>
 " clojure
 " ----------------------------------------------------------------------------
 function! s:lisp_maps()
-  nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-  nnoremap <buffer> <leader>a{ vi{<c-v>$:EasyAlign\ g/^\S/<cr>gv=
-  nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign\ g/^\S/<cr>gv=
+  nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign *\ g/^\S/<cr>gv=
+  nnoremap <buffer> <leader>a{ vi{<c-v>$:EasyAlign *\ g/^\S/<cr>gv=
+  nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign *\ g/^\S/<cr>gv=
   nnoremap <buffer> <leader>rq :silent update<bar>Require<cr>
   nnoremap <buffer> <leader>rQ :silent update<bar>Require!<cr>
   nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
@@ -928,13 +929,13 @@ command! PlugHelp call fzf#run(fzf#wrap({
 " ----------------------------------------------------------------------------
 " Help in new tabs
 " ----------------------------------------------------------------------------
-function! s:helptab()
-  if &buftype == 'help'
-    wincmd T
-    nnoremap <buffer> q :q<cr>
-  endif
-endfunction
-autocmd vimrc BufEnter *.txt call s:helptab()
+" function! s:helptab()
+"   if &buftype == 'help'
+"     wincmd T
+"     nnoremap <buffer> q :q<cr>
+"   endif
+" endfunction
+" autocmd vimrc BufEnter *.txt call s:helptab()
 
 
 " }}}
