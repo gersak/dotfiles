@@ -54,24 +54,27 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-dadbod'
 Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
-Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'scrooloose/nerdtree'
-
-" Plug 'justinmk/vim-gtfo'
-" Git
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-Plug 'sheerun/vim-polyglot'
-Plug 'airblade/vim-gitgutter'
-
-" Clojure
-Plug 'guns/vim-sexp'
+Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'tpope/vim-salve', { 'for': 'clojure' }
+Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
+Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
+Plug 'valloric/youcompleteme'
+
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'scrooloose/nerdtree'
+
+
+" Plug 'justinmk/vim-gtfo'
+" Git
+Plug 'sheerun/vim-polyglot'
+" Plug 'airblade/vim-gitgutter'
+
+" Clojure
+Plug 'guns/vim-sexp'
 
 " Css
 Plug 'ap/vim-css-color'
@@ -81,6 +84,7 @@ Plug 'pangloss/vim-javascript'
 
 " Others
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
+" Plug 'jceb/vim-orgmode.vim'
 
 " Lint
 " Plug 'metakirby5/codi.vim'
@@ -119,6 +123,8 @@ set showcmd
 set visualbell
 set backspace=indent,eol,start
 set timeoutlen=500
+set nowrap
+set sidescroll=1
 set whichwrap=b,s
 set shortmess=aIT
 set hlsearch " CTRL-L / CTRL-R W
@@ -145,6 +151,7 @@ set completeopt=menuone,preview
 " set nocursorline
 set nrformats=hex
 " silent! set cryptmethod=blowfish2
+let g:netrw_liststyle=3
 
 set formatoptions+=1
 if has('patch-7.3.541')
@@ -793,8 +800,8 @@ augroup vimrc
 
 augroup END
 
-" let g:clojure_maxlines = 60
-let g:clojure_maxlines =  300
+let g:clojure_maxlines = 60
+" let g:clojure_maxlines =  300
 
 set lispwords+=match
 let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
@@ -859,13 +866,24 @@ endfunction
 
 autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete()<cr>
 
+
+" ----------------------------------------------------------------------------
+" YCM
+" ----------------------------------------------------------------------------
+let g:ycm_auto_trigger=0
+
 " ----------------------------------------------------------------------------
 " Deoplete
 " ----------------------------------------------------------------------------
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#keyword_patterns = {}
-let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
-let g:deoplete#auto_complete_start_length=4
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#refresh_always = 'false'
+" let g:deoplete#on_text_changed_i= 'false'
+" let g:deoplete#keyword_patterns = {}
+" let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
+" let g:deoplete#auto_complete_start_length=4
+" call deoplete#custom#option({
+"       \'auto_complete': 'false'
+"       \})
 
 " ----------------------------------------------------------------------------
 " gruvbox
@@ -968,7 +986,7 @@ set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,\\.git  " Windows
 "
 au BufNewFile,BufRead *.edn set filetype=clojure
 au BufNewFile,BufRead *.boot set filetype=clojure
-let g:clojure_align_multiline_strings = 1
+let g:clojure_align_multiline_strings = 0
 let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,defui,routes,fn'
 let g:clojure_fuzzy_indent_patterns=['^GET', '^POST', '^PUT', '^DELETE', '^ANY', '^HEAD', '^PATCH', '^OPTIONS', '^def', '^let', '^with', '^reg-', '^register-',  '^om', '^dom', '^defui', '^fn']
 

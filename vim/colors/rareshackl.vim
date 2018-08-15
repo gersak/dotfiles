@@ -60,10 +60,10 @@ hi    Statement ctermfg=0     guifg=#c89cdf gui=bold        cterm=bold
 hi         Type ctermfg=60    guifg=#838bb5 gui=bold        cterm=bold
 hi       Number ctermfg=30    guifg=#d87c9f 
 hi         Todo ctermbg=15      ctermfg=196 guibg=#ff1100 guifg=#fffff gui=underline cterm=underline
-hi        Label ctermfg=0     guifg=#000000 gui=bold        cterm=bold
-hi StorageClass ctermfg=0     guifg=#000000 gui=bold        cterm=bold
-hi    Structure ctermfg=0     guifg=#000000 gui=bold        cterm=bold
-hi      TypeDef ctermfg=0     guifg=#000000 gui=bold        cterm=bold
+hi        Label ctermfg=0     guifg=#FFFFFF gui=bold        cterm=bold
+hi StorageClass ctermfg=0     guifg=#ffe8b8 gui=bold        cterm=bold
+hi    Structure ctermfg=0     guifg=#ffe8b8 gui=bold        cterm=bold
+
 hi  SpecialChar guifg=#ffce6d gui=bold
 
 
