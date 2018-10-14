@@ -4,8 +4,8 @@ unlet! skip_defaults_vim
 silent! source $VIMRUNTIME/defaults.vim
 
 
-let g:python_host_prog = '/usr/bin/python' 
-let g:python3_host_prog = '/usr/bin/python3' 
+" let g:python_host_prog = '/usr/bin/python' 
+" let g:python3_host_prog = '/usr/bin/python3' 
 
 if (empty($TMUX))
   if (has("nvim"))
@@ -13,7 +13,7 @@ if (empty($TMUX))
   let $NVIM_TUI_ENABLE_TRUE_COLOR=1
   endif
   "For Neovim > 0.1.5 and Vim > patch 7.4.1799 < https://github.com/vim/vim/commit/61be73bb0f965a895bfb064ea3e55476ac175162 >
-  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
+,  "Based on Vim patch 7.4.1770 (`guicolors` option) < https://github.com/vim/vim/commit/8a633e3427b47286869aa4b96f2bfc1fe65b25cd >
   " < https://github.com/neovim/neovim/wiki/Following-HEAD#20160511 >
   if (has("termguicolors"))
     set termguicolors
@@ -43,6 +43,7 @@ Plug 'junegunn/fzf.vim'
 " Colors
 Plug 'rafi/awesome-vim-colorschemes'
 " Plug 'yuttie/comfortable-motion.vim'
+"
 
 " Edit
 Plug 'tpope/vim-sleuth' 
@@ -62,20 +63,27 @@ Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'tpope/vim-salve', { 'for': 'clojure' }
 Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
-Plug 'valloric/youcompleteme'
+" Plug 'valloric/youcompleteme'
 
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-" Plug 'scrooloose/nerdtree'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/neco-vim'
+" Plug 'Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }'
+Plug 'wokalski/autocomplete-flow'
+
+" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh'}
+
+Plug 'benmills/vimux'
 
 
 " Plug 'justinmk/vim-gtfo'
 " Git
 Plug 'sheerun/vim-polyglot'
-" Plug 'airblade/vim-gitgutter'
 
 " Clojure
 Plug 'guns/vim-sexp'
-
+" Plug 'clojure-vim/async-clj-omni'
+" Plug 'venantius/vim-cljfmt'
+"
 " Css
 Plug 'ap/vim-css-color'
 
@@ -147,11 +155,12 @@ set autoread
 " set clipboard=unnamed
 set foldlevelstart=99
 set grepformat=%f:%l:%c:%m,%f:%l:%m
-set completeopt=menuone,preview
+" set completeopt=menuone,preview
+set completeopt=menuone
 " set nocursorline
 set nrformats=hex
 " silent! set cryptmethod=blowfish2
-let g:netrw_liststyle=3
+" let g:netrw_liststyle=3
 
 set formatoptions+=1
 if has('patch-7.3.541')
@@ -800,7 +809,7 @@ augroup vimrc
 
 augroup END
 
-let g:clojure_maxlines = 60
+" let g:clojure_maxlines = 60
 " let g:clojure_maxlines =  300
 
 set lispwords+=match
@@ -870,20 +879,24 @@ autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete
 " ----------------------------------------------------------------------------
 " YCM
 " ----------------------------------------------------------------------------
-let g:ycm_auto_trigger=0
+" let g:ycm_auto_trigger=1
+
 
 " ----------------------------------------------------------------------------
 " Deoplete
 " ----------------------------------------------------------------------------
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#refresh_always = 'false'
-" let g:deoplete#on_text_changed_i= 'false'
-" let g:deoplete#keyword_patterns = {}
-" let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
-" let g:deoplete#auto_complete_start_length=4
-" call deoplete#custom#option({
-"       \'auto_complete': 'false'
-"       \})
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#auto_complete_delay = 200
+let g:deoplete#keyword_patterns = {}
+" let g:deoplete#auto_complete = 'false'
+let g:deoplete#complete_method = 'omnifunc'
+let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
+let g:deoplete#auto_complete_start_length=3
+
+
+let g:LanguageClient_serverCommands = {
+    \ 'clojure' : ['bash', '-c', 'clojure-lsp'],
+    \ }
 
 " ----------------------------------------------------------------------------
 " gruvbox
@@ -972,6 +985,11 @@ nmap <silent> <Leader>8 :nohlsearch<cr>
 nmap <C-t> :tabnew<cr>
 nmap L :tabnext<cr>
 nmap H :tabNext<cr>
+nmap <C-up> :res +5<cr>
+nmap <C-down> :res -5<cr>
+nmap <C-left> :vertical resize -5<cr>
+nmap <C-right> :vertical resize +5<cr>
+
 
 set tabstop=2
 set shiftwidth=2
@@ -1019,6 +1037,19 @@ autocmd FileType clojure setlocal lispwords+=with-context,alet,mlet
 nmap <silent> <leader>r :Require<cr>
 nnoremap <leader>cr :Piggieback (adzerk.boot-cljs-repl/repl-env)<CR>
 nnoremap <leader>cn :Piggieback (cljs.repl.node/repl-env)<CR>
+nnoremap <leader>cs :Piggieback (shadow.cljs.devtools.api/nrepl-select )<CR>
+
+function! VimuxSlime()
+  call VimuxSendText(@v)
+  call VimuxSendKeys("Enter")
+endfunction
+
+" If text is selected, save it in the v buffer and send that buffer it to tmux
+vmap <LocalLeader>vs "vy :call VimuxSlime()<CR>
+
+" Select current paragraph and send it to tmux
+nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
+
 
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
@@ -1034,6 +1065,13 @@ let g:EasyMotion_smartcase = 1
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
+" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" Or map each action separately
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+autocmd FileType netrw setl bufhidden=delete
 
 let g:golden_ratio_autocommand = 0
 colorscheme rareshack

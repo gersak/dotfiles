@@ -95,11 +95,11 @@ tpingping() {
 
 
 # Colored ls
-# if [ -x /usr/bin/dircolors ]; then
-#   eval `dircolors -b "$HOME/.dir_colors" | head -n 1`
-#   alias ls='ls --color=auto'
-#   alias grep='grep --color=auto'
-# fi
+if [ -x /usr/bin/dircolors ]; then
+  eval `dircolors -b "$HOME/.dir_colors" | head -n 1`
+  # alias ls='ls --color=auto'
+  alias grep='grep --color=auto'
+fi
 
 
 # Prompt
