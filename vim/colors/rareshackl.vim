@@ -52,13 +52,16 @@ hi       Ignore ctermfg=8     guifg=#9b84a1
 hi   Identifier ctermfg=31    guifg=#c89cdf
 hi      PreProc ctermfg=247   guifg=#c89cdf gui=bold        cterm=bold
 hi      Comment ctermfg=246   guifg=#786885
-hi     Constant ctermfg=6     guifg=#d87c9f gui=none        cterm=none
+" hi     Constant ctermfg=6     guifg=#c1eacd gui=none        cterm=none
+hi     Constant ctermfg=6     guifg=#fe9ac9 gui=none        cterm=none
+" hi       String ctermfg=161   guifg=#fe9ac9
+" hi       String ctermfg=161   guifg=#d87c9f
 hi       String ctermfg=161   guifg=#c1eacd
 " hi     Function ctermfg=88    guifg=#abbdfc
 hi     Function ctermfg=88    guifg=#bfccfc
 hi    Statement ctermfg=0     guifg=#c89cdf gui=bold        cterm=bold
 hi         Type ctermfg=60    guifg=#838bb5 gui=bold        cterm=bold
-hi       Number ctermfg=30    guifg=#d87c9f 
+hi       Number ctermfg=30    guifg=#c1eacd 
 hi         Todo ctermbg=15      ctermfg=196 guibg=#ff1100 guifg=#fffff gui=underline cterm=underline
 hi        Label ctermfg=0     guifg=#FFFFFF gui=bold        cterm=bold
 hi StorageClass ctermfg=0     guifg=#ffe8b8 gui=bold        cterm=bold

@@ -36,16 +36,18 @@ Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign']
 " Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/gv.vim'
-Plug 'junegunn/limelight.vim'
 Plug 'junegunn/fzf',        { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'terryma/vim-multiple-cursors'
+
 
 " Colors
 Plug 'rafi/awesome-vim-colorschemes'
-" Plug 'yuttie/comfortable-motion.vim'
-"
+
 
 " Edit
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 Plug 'tpope/vim-sleuth' 
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
@@ -54,36 +56,38 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-dadbod'
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'tpope/vim-salve', { 'for': 'clojure' }
-Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
-" Plug 'valloric/youcompleteme'
+" Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
 
+Plug 'justinmk/vim-dirvish'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neco-vim'
-" Plug 'Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }'
 Plug 'wokalski/autocomplete-flow'
-
+" Plug 'Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }'
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh'}
 
-Plug 'benmills/vimux'
+
+" Plug 'benmills/vimux'
 
 
 " Plug 'justinmk/vim-gtfo'
-" Git
 Plug 'sheerun/vim-polyglot'
 
 " Clojure
 Plug 'guns/vim-sexp'
-" Plug 'clojure-vim/async-clj-omni'
+Plug 'clojure-vim/async-clj-omni'
 " Plug 'venantius/vim-cljfmt'
 "
+" Python
+Plug 'vim-syntastic/syntastic'
+
 " Css
 Plug 'ap/vim-css-color'
 
@@ -106,6 +110,7 @@ endif
 " BASIC SETTINGS {{{
 " ============================================================================
 
+"
 let mapleader      = '\'
 let maplocalleader = '\'
 " let mapleader = "\<Space>"
@@ -118,11 +123,12 @@ augroup CursorLine
   au!
   au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
   au WinLeave * setlocal nocursorline
-augroup END"
+augroup END
 
 set nu
 set cursorline
-set nonumber
+" set nonumber
+" set relativenumber
 set autoindent
 set smartindent
 set lazyredraw
@@ -131,7 +137,7 @@ set showcmd
 set visualbell
 set backspace=indent,eol,start
 set timeoutlen=500
-set nowrap
+" set nowrap
 set sidescroll=1
 set whichwrap=b,s
 set shortmess=aIT
@@ -338,33 +344,34 @@ endif
 " nnoremap <C-n> :NERDTreeFind<cr>
 
 "  Tagbar
-nnoremap <silent>tt :TagbarToggle<cr>
-let g:tagbar_sort = 0
+" nnoremap <silent>tt :TagbarToggle<cr>
+" let g:tagbar_sort = 0
 
 
 " Movement in insert mode
-inoremap <C-h> <C-o>h
-inoremap <C-l> <C-o>a
-inoremap <C-j> <C-o>j
-inoremap <C-k> <C-o>k
-inoremap <C-^> <C-o><C-^>
+" inoremap <C-h> <C-o>h
+" inoremap <C-l> <C-o>a
+" inoremap <C-j> <C-o>j
+" inoremap <C-k> <C-o>k
+" inoremap <C-^> <C-o><C-^>
+
+tnoremap <Esc><Esc> <c-\><c-n>
+
+" Completion
+inoremap <C-Space> <C-x><C-o>
+inoremap <C-@> <C-Space>
 
 " Make Y behave like other capitals
 nnoremap Y y$
 
 " qq to record, Q to replay
-nnoremap <Leader>q q
+nnoremap qq q
 nnoremap q <Esc>
+inoremap qq <Esc>
 nnoremap Q @q
 
 " Last inserted text
 nnoremap g. :normal! `[v`]<cr><left>
-
-" ----------------------------------------------------------------------------
-" <tab> / <s-tab> | Circular windows navigation
-" ----------------------------------------------------------------------------
-nnoremap <tab>   <c-w>w
-nnoremap <S-tab> <c-w>W
 
 " ----------------------------------------------------------------------------
 " Markdown headings
@@ -406,33 +413,10 @@ cnoremap        <M-f> <S-Right>
 silent! exe "set <S-Left>=\<Esc>b"
 silent! exe "set <S-Right>=\<Esc>f"
 
-" ----------------------------------------------------------------------------
-" #gi / #gpi | go to next/previous indentation level
-" ----------------------------------------------------------------------------
-function! s:go_indent(times, dir)
-  for _ in range(a:times)
-    let l = line('.')
-    let x = line('$')
-    let i = s:indent_len(getline(l))
-    let e = empty(getline(l))
-    while l >= 1 && l <= x
-      let line = getline(l + a:dir)
-      let l += a:dir
-      if s:indent_len(line) != i || empty(line) != e
-        break
-      endif
-    endwhile
-    let l = min([max([1, l]), x])
-    execute 'normal! '. l .'G^'
-  endfor
-endfunction
-nnoremap <silent> gi :<c-u>call <SID>go_indent(v:count1, 1)<cr>
-noremap <silent> gpi :<c-u>call <SID>go_indent(v:count1, -1)<cr>
-
 " " ----------------------------------------------------------------------------
 " " <leader>bs | buf-search
 " " ----------------------------------------------------------------------------
-" nnoremap <leader>bs :cex []<BAR>bufdo vimgrepadd @@g %<BAR>cw<s-left><s-left><right>
+nnoremap <leader>bs :cex []<BAR>bufdo vimgrepadd @@g %<BAR>cw<s-left><s-left><right>
 
 " " ----------------------------------------------------------------------------
 " " #!! | Shebang
@@ -463,33 +447,6 @@ function! s:colors(...)
         \                  'v:val !~ "^/usr/"'),
         \           'fnamemodify(v:val, ":t:r")'),
         \       '!a:0 || stridx(v:val, a:1) >= 0')
-endfunction
-
-function! s:copy_rtf(line1, line2, ...)
-  let [ft, cs, nu] = [&filetype, g:colors_name, &l:nu]
-  let lines = getline(1, '$')
-
-  tab new
-  setlocal buftype=nofile bufhidden=wipe nonumber
-  let &filetype = ft
-  call setline(1, lines)
-
-  execute 'colo' get(a:000, 0, 'seoul256-light')
-  hi Normal ctermbg=NONE guibg=NONE
-
-  let lines = getline(a:line1, a:line2)
-  let indent = repeat(' ', min(map(filter(copy(lines), '!empty(v:val)'), 'len(matchstr(v:val, "^ *"))')))
-  call setline(a:line1, map(lines, 'substitute(v:val, indent, "", "")'))
-
-  call tohtml#Convert2HTML(a:line1, a:line2)
-  g/^\(pre\|body\) {/s/background-color: #[0-9]*; //
-  silent %write !textutil -convert rtf -textsizemultiplier 1.3 -stdin -stdout | pbcopy
-
-  bd!
-  tabclose
-
-  let &l:nu = nu
-  execute 'colorscheme' cs
 endfunction
 
 " ----------------------------------------------------------------------------
@@ -831,50 +788,6 @@ let g:paredit_smartjump = 1
 " nnoremap gss :SplitjoinSplit<cr>
 " nnoremap gsj :SplitjoinJoin<cr>
 
-" ----------------------------------------------------------------------------
-" vimawesome.com
-" ----------------------------------------------------------------------------
-function! VimAwesomeComplete() abort
-  let prefix = matchstr(strpart(getline('.'), 0, col('.') - 1), '[.a-zA-Z0-9_/-]*$')
-  echohl WarningMsg
-  echo 'Downloading plugin list from VimAwesome'
-  echohl None
-  ruby << EOF
-  require 'json'
-  require 'open-uri'
-
-  query = VIM::evaluate('prefix').gsub('/', '%20')
-  items = 1.upto(max_pages = 3).map do |page|
-    Thread.new do
-      url  = "http://vimawesome.com/api/plugins?page=#{page}&query=#{query}"
-      data = open(url).read
-      json = JSON.parse(data, symbolize_names: true)
-      json[:plugins].map do |info|
-        pair = info.values_at :github_owner, :github_repo_name
-        next if pair.any? { |e| e.nil? || e.empty? }
-        {word: pair.join('/'),
-         menu: info[:category].to_s,
-         info: info.values_at(:short_desc, :author).compact.join($/)}
-      end.compact
-    end
-  end.each(&:join).map(&:value).inject(:+)
-  VIM::command("let cands = #{JSON.dump items}")
-EOF
-  if !empty(cands)
-    inoremap <buffer> <c-v> <c-n>
-    augroup _VimAwesomeComplete
-      autocmd!
-      autocmd CursorMovedI,InsertLeave * iunmap <buffer> <c-v>
-            \| autocmd! _VimAwesomeComplete
-    augroup END
-
-    call complete(col('.') - strchars(prefix), cands)
-  endif
-  return ''
-endfunction
-
-autocmd vimrc FileType vim inoremap <buffer> <c-x><c-v> <c-r>=VimAwesomeComplete()<cr>
-
 
 " ----------------------------------------------------------------------------
 " YCM
@@ -894,9 +807,9 @@ let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
 let g:deoplete#auto_complete_start_length=3
 
 
-let g:LanguageClient_serverCommands = {
-    \ 'clojure' : ['bash', '-c', 'clojure-lsp'],
-    \ }
+" let g:LanguageClient_serverCommands = {
+"     \ 'clojure' : ['bash', '-c', 'clojure-lsp'],
+"     \ }
 
 " ----------------------------------------------------------------------------
 " gruvbox
@@ -917,14 +830,12 @@ endif
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
-" nnoremap <silent> <Leader><Leader> :Files<CR>
 nnoremap <silent>  <expr>     <Leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c-w>" : '').":Files\<cr>"
 nnoremap <silent>  <Leader>C  :Colors<CR>
 nnoremap <silent>  <C-f>      :BLines<cr>
 nnoremap <silent>  <Leader>h  :Helptags<CR>
 nnoremap <silent>  <Leader>t  :Tags<CR>
 nnoremap <silent>; :Buffers<CR>
-" nnoremap <silent> <Leader>ag       :Ag <C-R><C-W><CR>
 nnoremap <silent>  <Leader>ag :Ag       <CR>
 nnoremap <silent>  <Leader>AG :Ag       <C-R><C-A><CR>
 xnoremap <silent>  <Leader>ag y:Ag      <C-R>"<CR>
@@ -1030,8 +941,10 @@ autocmd FileType clojure setlocal lispwords+=add-encoder
 autocmd FileType clojure setlocal lispwords+=with-call-in,with-eval-in,with-pre-wrap,with-post-wrap
 " Cats
 autocmd FileType clojure setlocal lispwords+=with-context,alet,mlet
+" Dreamcatcher
+autocmd FileType clojure setlocal lispwords+=defstm,set-stm!,update-data!
 
-"
+
 " SHORTCUTS
 " Clojure
 nmap <silent> <leader>r :Require<cr>
@@ -1039,16 +952,16 @@ nnoremap <leader>cr :Piggieback (adzerk.boot-cljs-repl/repl-env)<CR>
 nnoremap <leader>cn :Piggieback (cljs.repl.node/repl-env)<CR>
 nnoremap <leader>cs :Piggieback (shadow.cljs.devtools.api/nrepl-select )<CR>
 
-function! VimuxSlime()
-  call VimuxSendText(@v)
-  call VimuxSendKeys("Enter")
-endfunction
+" function! VimuxSlime()
+"   call VimuxSendText(@v)
+"   call VimuxSendKeys("Enter")
+" endfunction
 
 " If text is selected, save it in the v buffer and send that buffer it to tmux
-vmap <LocalLeader>vs "vy :call VimuxSlime()<CR>
+" vmap <LocalLeader>vs "vy :call VimuxSlime()<CR>
 
 " Select current paragraph and send it to tmux
-nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
+" nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
 
 
 
@@ -1071,7 +984,36 @@ map <Leader>k <Plug>(easymotion-k)
 " nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 " nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
-autocmd FileType netrw setl bufhidden=delete
+" Dirvish
+let g:dirvish_mode = ':sort ,^.*[\/],'
+let g:loaded_netrwPlugin = 1
+command! -nargs=? -complete=dir Explore Dirvish <args>
+command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
+command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
+augroup dirvish_config
+  autocmd!
+
+  " Map `t` to open in new tab.
+  autocmd FileType dirvish
+        \  nnoremap <silent><buffer> t :call dirvish#open('tabedit', 0)<CR>
+        \ |xnoremap <silent><buffer> t :call dirvish#open('tabedit', 0)<CR>
+
+  " Map `gr` to reload.
+  autocmd FileType dirvish nnoremap <silent><buffer>
+        \ gr :<C-U>Dirvish %<CR>
+
+  " Map `gh` to hide dot-prefixed files.  Press `R` to "toggle" (reload).
+  autocmd FileType dirvish nnoremap <silent><buffer>
+        \ gh :silent keeppatterns g@\v/\.[^\/]+/?$@d _<cr>:setl cole=3<cr>
+augroup END
+
+
+
+
+
+" GOYO
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight! 
 
 let g:golden_ratio_autocommand = 0
 colorscheme rareshack

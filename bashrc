@@ -521,10 +521,14 @@ export TZ
 
 export NIX_ENV=~/.nix-profile/bin/
 export TESSDATA_PREFIX=~/.nix-profile/share
-
 export PATH=$PATH:$NIX_ENV:$TESSERACT
+export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history"
+
 # export TERM=xterm-256color
 
 
 # alias development=`cd ~/development/`
 # alias roboti=`cd ~/development/roboti`
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
