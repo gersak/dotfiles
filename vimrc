@@ -63,6 +63,7 @@ Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 Plug 'tpope/vim-salve', { 'for': 'clojure' }
+Plug 'tpope/vim-speeddating'
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
 " Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
 
@@ -96,7 +97,8 @@ Plug 'pangloss/vim-javascript'
 
 " Others
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
-" Plug 'jceb/vim-orgmode.vim'
+
+Plug 'jceb/vim-orgmode'
 
 " Lint
 " Plug 'metakirby5/codi.vim'
