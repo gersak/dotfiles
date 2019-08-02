@@ -520,12 +520,16 @@ export TZ
 # export ABBY=/Users/robi/ABBY/
 
 export NIX_ENV=~/.nix-profile/bin/
+export NODE_EVN=~/.npm-global/bin/
 export TESSDATA_PREFIX=~/.nix-profile/share
-export PATH=$PATH:$NIX_ENV:$TESSERACT
+export ZOOKEEPER=~/ZOOKEEPER/zookeeper-3.4.14/bin
+export KAFKA=~/KAFKA/kafka_2.11-2.1.0/bin
+export PATH=$PATH:$NIX_ENV:$TESSERACT:$NODE_ENV
 export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history"
+# export JAVA_HOME=~/GRAAL/graalvm-ce-19.1.1/
+
 
 # export TERM=xterm-256color
-
 
 # alias development=`cd ~/development/`
 # alias roboti=`cd ~/development/roboti`

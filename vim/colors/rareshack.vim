@@ -112,3 +112,5 @@ if has("spell")
 endif
 " }}}
 
+au InsertLeave * hi   StatusLine ctermfg=238 ctermbg=250 guifg=#404040 guibg=#bbbbbb gui=bold cterm=bold
+au InsertEnter * hi StatusLine term=reverse ctermbg=5 gui=undercurl guisp=Magenta guibg=#91ff82

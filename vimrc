@@ -48,6 +48,7 @@ Plug 'rafi/awesome-vim-colorschemes'
 " Edit
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
+Plug 'brooth/far.vim'
 Plug 'tpope/vim-sleuth' 
 Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
@@ -57,11 +58,11 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-dadbod'
 " Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive', {'tag':'v2.5'}
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
+Plug 'tpope/vim-fireplace', {'tag':'v1.2', 'for': 'clojure' }
 Plug 'tpope/vim-salve', { 'for': 'clojure' }
 Plug 'tpope/vim-speeddating'
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
@@ -73,21 +74,23 @@ Plug 'Shougo/neco-vim'
 Plug 'wokalski/autocomplete-flow'
 " Plug 'Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }'
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh'}
-
-
 " Plug 'benmills/vimux'
 
-
+" Plug 'w0rp/ale'
 " Plug 'justinmk/vim-gtfo'
 Plug 'sheerun/vim-polyglot'
 
 " Clojure
 Plug 'guns/vim-sexp'
-Plug 'clojure-vim/async-clj-omni'
+Plug 'jparise/vim-graphql'
+" Plug 'clojure-vim/async-clj-omni'
 " Plug 'venantius/vim-cljfmt'
 "
 " Python
 Plug 'vim-syntastic/syntastic'
+
+" C#
+Plug 'OmniSharp/omnisharp-vim'
 
 " Css
 Plug 'ap/vim-css-color'
@@ -97,7 +100,6 @@ Plug 'pangloss/vim-javascript'
 
 " Others
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
-
 Plug 'jceb/vim-orgmode'
 
 " Lint
@@ -129,7 +131,7 @@ augroup END
 
 set nu
 set cursorline
-" set nonumber
+set nonumber
 " set relativenumber
 set autoindent
 set smartindent
@@ -139,7 +141,7 @@ set showcmd
 set visualbell
 set backspace=indent,eol,start
 set timeoutlen=500
-" set nowrap
+set nowrap
 set sidescroll=1
 set whichwrap=b,s
 set shortmess=aIT
@@ -769,7 +771,7 @@ augroup vimrc
 augroup END
 
 " let g:clojure_maxlines = 60
-" let g:clojure_maxlines =  300
+let g:clojure_maxlines =  300
 
 set lispwords+=match
 let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
@@ -1018,7 +1020,8 @@ autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight! 
 
 let g:golden_ratio_autocommand = 0
-colorscheme rareshack
+colorscheme gersak
+" colorscheme rareshack
 " colorscheme happy_hacking
 " colorscheme OceanicNext
 " colorscheme molokai
