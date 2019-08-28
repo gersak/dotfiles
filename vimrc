@@ -58,11 +58,12 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-dadbod'
 " Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-fugitive', {'tag':'v2.5'}
+Plug 'tpope/vim-fugitive', {'tag':'v3.0'}
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
-Plug 'tpope/vim-fireplace', {'tag':'v1.2', 'for': 'clojure' }
+Plug 'tpope/vim-fireplace', {'tag':'v2.1', 'for': 'clojure' }
+" Plug 'tpope/vim-fireplace', {'tag':'v1.2', 'for': 'clojure' }
 Plug 'tpope/vim-salve', { 'for': 'clojure' }
 Plug 'tpope/vim-speeddating'
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }

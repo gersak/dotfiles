@@ -524,7 +524,7 @@ export NODE_EVN=~/.npm-global/bin/
 export TESSDATA_PREFIX=~/.nix-profile/share
 export ZOOKEEPER=~/ZOOKEEPER/zookeeper-3.4.14/bin
 export KAFKA=~/KAFKA/kafka_2.11-2.1.0/bin
-export PATH=$PATH:$NIX_ENV:$TESSERACT:$NODE_ENV
+export PATH=$PATH:$HOME/.npm-global/bin:$TESSERACT:$NODE_ENV
 export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history"
 # export JAVA_HOME=~/GRAAL/graalvm-ce-19.1.1/
 
@@ -536,3 +536,6 @@ export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history"
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
+export DOCKER_HOST='tcp://0.0.0.0:2375'
+source .aws.rc
+eval $(ssh-agent -s)
