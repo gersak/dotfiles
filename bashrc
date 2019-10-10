@@ -519,12 +519,12 @@ export TZ
 # export TERM=screen-256color-bce
 # export ABBY=/Users/robi/ABBY/
 
-export NIX_ENV=~/.nix-profile/bin/
-export NODE_EVN=~/.npm-global/bin/
-export TESSDATA_PREFIX=~/.nix-profile/share
-export ZOOKEEPER=~/ZOOKEEPER/zookeeper-3.4.14/bin
-export KAFKA=~/KAFKA/kafka_2.11-2.1.0/bin
-export PATH=$PATH:$HOME/.npm-global/bin:$TESSERACT:$NODE_ENV
+#export NIX_ENV=~/.nix-profile/bin/
+#export NODE_EVN=~/.npm-global/bin/
+#export TESSDATA_PREFIX=~/.nix-profile/share
+#export ZOOKEEPER=~/ZOOKEEPER/zookeeper-3.4.14/bin
+#export KAFKA=~/KAFKA/kafka_2.11-2.1.0/bin
+#export PATH=$PATH:$HOME/.npm-global/bin:$TESSERACT:$NODE_ENV
 export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history"
 # export JAVA_HOME=~/GRAAL/graalvm-ce-19.1.1/
 
@@ -535,7 +535,14 @@ export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history"
 # alias roboti=`cd ~/development/roboti`
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-export DOCKER_HOST='tcp://0.0.0.0:2375'
-source .aws.rc
+export PATH="$PATH:$HOME:.rvm/bin"
+# export DOCKER_HOST='tcp://0.0.0.0:2375'
+# source ~/.awsrc
 eval $(ssh-agent -s)
+
+alias reply='clj -A:reply -m repl.main --attach '
+alias tubular='clj -A:tubular -m tubular.core'
+
+
+if [ -e /home/rgersak/.nix-profile/etc/profile.d/nix.sh ]; then . /home/rgersak/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+export GPG_TTY=$(tty)

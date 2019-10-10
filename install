@@ -3,10 +3,10 @@
 cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
 
 BASE=$(pwd)
-touch bashrc-extra
+
 for rc in *rc *profile tmux.conf agignore bashrc; do
-  mkdir -pv bak
-  [ -e ~/."$rc" ] && mv -v ~/."$rc" bak/."$rc"
+  # mkdir -pv bak
+  # [ -e ~/."$rc" ] && mv -v ~/."$rc" bak/."$rc"
   ln -sfv "$BASE/$rc" ~/."$rc"
 done
 
@@ -23,17 +23,12 @@ done
 
 
 
-nix-env -iA nixpkgs.neovim nixpkgs.boot nixpkgs.python35Packages.neovim \
-            nixpkgs.openjdk nixpkgs.ripgrep nixpkgs.tmux nixpkgs.fzf \
-            nixpkgs.nodejs-8_x nixpkgs.psqlodbc
-
-
 rm -f ~/.tmux.conf
 ln -s ./tmux.conf ~/.tmux.conf
 
 git config --global user.email "robi@neyho.com"
 git config --global user.name "Robert Gersak"
+git config --global core.autocrlf true
+git config --global core.autocrlf input
 
 tmux source-file ~/.tmux.conf
-
-./install-vim

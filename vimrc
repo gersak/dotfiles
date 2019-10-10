@@ -1021,8 +1021,8 @@ autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight! 
 
 let g:golden_ratio_autocommand = 0
-colorscheme gersak
-" colorscheme rareshack
+" colorscheme gersak
+colorscheme rareshack
 " colorscheme happy_hacking
 " colorscheme OceanicNext
 " colorscheme molokai
