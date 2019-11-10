@@ -30,10 +30,11 @@ endif
 
 silent! if plug#begin('~/.vim/plugged')
 
+Plug 'mhinz/vim-startify'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 " Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
-" Plug 'junegunn/vim-emoji'
+Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/gv.vim'
 Plug 'junegunn/fzf',        { 'do': './install --all' }
@@ -42,7 +43,8 @@ Plug 'terryma/vim-multiple-cursors'
 
 
 " Colors
-Plug 'rafi/awesome-vim-colorschemes'
+" Plug 'rafi/awesome-vim-colorschemes'
+Plug 'cormacrelf/vim-colors-github'
 
 
 " Edit
@@ -68,6 +70,7 @@ Plug 'tpope/vim-salve', { 'for': 'clojure' }
 Plug 'tpope/vim-speeddating'
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
 " Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
+" Plug 'MattesGroeger/vim-bookmarks' 
 
 Plug 'justinmk/vim-dirvish'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -142,7 +145,7 @@ set showcmd
 set visualbell
 set backspace=indent,eol,start
 set timeoutlen=500
-set nowrap
+" set nowrap
 set sidescroll=1
 set whichwrap=b,s
 set shortmess=aIT

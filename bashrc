@@ -540,7 +540,7 @@ export PATH="$PATH:$HOME:.rvm/bin"
 # source ~/.awsrc
 eval $(ssh-agent -s)
 
-alias reply='clj -A:reply -m repl.main --attach '
+alias reply='clj -A:reply -m reply.main --attach '
 alias tubular='clj -A:tubular -m tubular.core'
 
 

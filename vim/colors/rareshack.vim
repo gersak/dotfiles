@@ -18,10 +18,10 @@ hi    VisualNOS ctermfg=15     ctermbg=24 guifg=#FFFFFF guibg=#204a87
 hi       Search ctermfg=236   ctermbg=228 guifg=#204a87 guibg=#e8e8e8 cterm=underline      gui=underline
 hi       Folded ctermfg=8      ctermbg=15 guifg=#808080 guibg=#ECECEC gui=bold           cterm=bold
 hi        Title ctermfg=167 guifg=#ef5939
-hi   StatusLine ctermfg=238   ctermbg=250 guifg=#404040 guibg=#bbbbbb gui=bold           cterm=bold
-hi StatusLineNC ctermfg=238   ctermbg=252 guifg=#404040 guibg=#d4d4d4 gui=italic       cterm=italic
-hi    VertSplit ctermfg=250   ctermbg=250 guifg=#bbbbbb guibg=#bbbbbb gui=none           cterm=none
-hi       LineNr ctermfg=246    ctermbg=15 guifg=#959595 guibg=#ECECEC gui=bold           cterm=bold
+hi   StatusLine ctermfg=238   ctermbg=250 guifg=#303030 guibg=#fffff7 gui=bold           cterm=bold
+hi StatusLineNC ctermfg=238   ctermbg=252 guifg=#303030 guibg=#eeeeee  gui=italic       cterm=italic
+hi    VertSplit ctermfg=250   ctermbg=250 guifg=#eeeeee guibg=#fffff7 gui=none           cterm=none
+hi       LineNr ctermfg=246    ctermbg=15 guifg=#dddddd guibg=#fffff7 gui=bold           cterm=bold
 hi   SpecialKey ctermfg=6   guifg=#177F80 gui=italic     cterm=italic
 hi   WarningMsg ctermfg=167 guifg=#ef5939 guibg=#000000
 hi     ErrorMsg ctermbg=15    ctermfg=196 guibg=#f8f8ff guifg=#ff1100 gui=undercurl cterm=undercurl
@@ -30,7 +30,7 @@ hi  ColorColumn ctermbg=254 guibg=#e4e4e4
 
 " {{{ Vim => 7.0 specific colors
 if version >= 700
-    hi CursorLine ctermbg=0       guibg=NONE cterm=underline gui=underline
+    hi CursorLine ctermbg=0       guibg=#fffff7 cterm=underline gui=underline
     hi MatchParen ctermfg=0     ctermbg=252 guifg=#000000 guibg=#ABFFE3 gui=underline cterm=underline
     hi      Pmenu ctermfg=15      ctermbg=8 guifg=#ffffff guibg=#808080 gui=bold     cterm=bold
     hi   PmenuSel ctermfg=0     ctermbg=252 guifg=#000000 guibg=#ABFFE3 gui=italic cterm=italic
@@ -49,15 +49,20 @@ hi DiffDelete ctermfg=252 ctermbg=224   guifg=#DDCCCC guibg=#FFDDDD gui=none    
 " {{{ Syntax highlighting
 hi      Special ctermfg=247   guifg=#9400AB gui=bold         cterm=bold
 hi       Define ctermfg=247   guifg=#9400AB gui=bold         cterm=bold
+hi clojureDefine ctermfg=247   guifg=#9400AB gui=bold         cterm=bold
+hi clojureMacro ctermfg=247   guifg=#0000FF gui=bold         cterm=bold
 hi       Ignore ctermfg=8     guifg=#808080
-hi   Identifier ctermfg=31    guifg=#0086B3
+" hi   Identifier ctermfg=31    guifg=#0086B3
+hi   Identifier ctermfg=31    guifg=#007a00
 hi      PreProc ctermfg=247   guifg=#9400AB gui=bold         cterm=bold
 hi      Comment ctermfg=246   guifg=#c3c3c3
 hi     Constant ctermfg=6     guifg=#0a63cf gui=none         cterm=none
-hi       String ctermfg=161   guifg=#007A00
+" hi       String ctermfg=161   guifg=#007A00
+hi       String ctermfg=161   guifg=#a30a29
 hi     Function ctermfg=88    guifg=#0000FF
 hi    Statement ctermfg=0     guifg=#9400AB gui=bold         cterm=bold
 hi         Type ctermfg=60    guifg=#445588 gui=bold         cterm=bold
+" hi       Number ctermfg=30    guifg=#0a63cf
 hi       Number ctermfg=30    guifg=#0a63cf
 hi         Todo ctermbg=15      ctermfg=196 guibg=#f8f8ff guifg=#ff1100 gui=underline cterm=underline
 hi        Label ctermfg=0     guifg=#000000 gui=bold         cterm=bold
