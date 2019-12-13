@@ -33,52 +33,37 @@ silent! if plug#begin('~/.vim/plugged')
 Plug 'mhinz/vim-startify'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-" Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity']      }
 Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-peekaboo'
-Plug 'junegunn/gv.vim'
 Plug 'junegunn/fzf',        { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'terryma/vim-multiple-cursors'
+" Plug 'terryma/vim-multiple-cursors'
 
 
 " Colors
 " Plug 'rafi/awesome-vim-colorschemes'
 Plug 'cormacrelf/vim-colors-github'
 
+" Git
+Plug 'junegunn/gv.vim'
+Plug 'tpope/vim-fugitive', {'tag':'v3.1'}
 
 " Edit
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
 Plug 'brooth/far.vim'
+Plug 'tpope/vim-speeddating' 
 Plug 'tpope/vim-sleuth' 
-Plug 'tpope/vim-rsi'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-dadbod'
-" Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-fugitive', {'tag':'v3.0'}
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
-Plug 'tpope/vim-fireplace', {'tag':'v2.1', 'for': 'clojure' }
-" Plug 'tpope/vim-fireplace', {'tag':'v1.2', 'for': 'clojure' }
-Plug 'tpope/vim-salve', { 'for': 'clojure' }
-Plug 'tpope/vim-speeddating'
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
-" Plug 'majutsushi/tagbar', { 'on': 'TagbarToggle'      }
-" Plug 'MattesGroeger/vim-bookmarks' 
 
 Plug 'justinmk/vim-dirvish'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/neco-vim'
-Plug 'wokalski/autocomplete-flow'
-" Plug 'Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }'
-" Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh'}
-" Plug 'benmills/vimux'
 
 " Plug 'w0rp/ale'
 " Plug 'justinmk/vim-gtfo'
@@ -87,8 +72,7 @@ Plug 'sheerun/vim-polyglot'
 " Clojure
 Plug 'guns/vim-sexp'
 Plug 'jparise/vim-graphql'
-" Plug 'clojure-vim/async-clj-omni'
-" Plug 'venantius/vim-cljfmt'
+Plug 'Olical/conjure', { 'tag': 'v2.1.2', 'do': 'bin/compile' }
 "
 " Python
 Plug 'vim-syntastic/syntastic'
@@ -1015,7 +999,9 @@ augroup dirvish_config
         \ gh :silent keeppatterns g@\v/\.[^\/]+/?$@d _<cr>:setl cole=3<cr>
 augroup END
 
-
+let g:conjure_log_direction = "horizontal"
+let g:conjure_quick_doc_normal_mode=v:false
+let g:conjure_log_blacklist = ["up", "ret", "ret-multiline", "load-file", "eval"]
 
 
 

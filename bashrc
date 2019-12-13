@@ -526,7 +526,8 @@ export TZ
 #export KAFKA=~/KAFKA/kafka_2.11-2.1.0/bin
 #export PATH=$PATH:$HOME/.npm-global/bin:$TESSERACT:$NODE_ENV
 export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history"
-# export JAVA_HOME=~/GRAAL/graalvm-ce-19.1.1/
+export JAVA_HOME=~/GRAAL/graalvm-ce-19.2.1
+export GRAAL_BIN=~/GRAAL/graalvm-ce-19.2.1/bin
 
 
 # export TERM=xterm-256color
@@ -535,7 +536,7 @@ export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history"
 # alias roboti=`cd ~/development/roboti`
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME:.rvm/bin"
+export PATH="$PATH:$HOME:$GRAAL_BIN:.rvm/bin"
 # export DOCKER_HOST='tcp://0.0.0.0:2375'
 # source ~/.awsrc
 eval $(ssh-agent -s)
