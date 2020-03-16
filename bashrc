@@ -526,8 +526,8 @@ export TZ
 #export KAFKA=~/KAFKA/kafka_2.11-2.1.0/bin
 #export PATH=$PATH:$HOME/.npm-global/bin:$TESSERACT:$NODE_ENV
 export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history"
-export JAVA_HOME=~/GRAAL/graalvm-ce-19.2.1
-export GRAAL_BIN=~/GRAAL/graalvm-ce-19.2.1/bin
+export JAVA_HOME=~/GRAAL/graalvm-ce-java11-20.0.0
+export GRAAL_BIN=~/GRAAL/graalvm-ce-java11-20.0.0/bin
 
 
 # export TERM=xterm-256color

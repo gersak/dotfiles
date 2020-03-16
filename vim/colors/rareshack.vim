@@ -18,7 +18,7 @@ hi    VisualNOS ctermfg=15     ctermbg=24 guifg=#FFFFFF guibg=#204a87
 hi       Search ctermfg=236   ctermbg=228 guifg=#204a87 guibg=#e8e8e8 cterm=underline      gui=underline
 hi       Folded ctermfg=8      ctermbg=15 guifg=#808080 guibg=#ECECEC gui=bold           cterm=bold
 hi        Title ctermfg=167 guifg=#ef5939
-hi   StatusLine ctermfg=238   ctermbg=250 guifg=#303030 guibg=#fffff7 gui=bold           cterm=bold
+hi   StatusLine ctermfg=238   ctermbg=250 guibg=#303030 guifg=#fffff7 gui=bold           cterm=bold
 hi StatusLineNC ctermfg=238   ctermbg=252 guifg=#303030 guibg=#eeeeee  gui=italic       cterm=italic
 hi    VertSplit ctermfg=250   ctermbg=250 guifg=#eeeeee guibg=#fffff7 gui=none           cterm=none
 hi       LineNr ctermfg=246    ctermbg=15 guifg=#dddddd guibg=#fffff7 gui=bold           cterm=bold
@@ -26,6 +26,7 @@ hi   SpecialKey ctermfg=6   guifg=#177F80 gui=italic     cterm=italic
 hi   WarningMsg ctermfg=167 guifg=#ef5939 guibg=#000000
 hi     ErrorMsg ctermbg=15    ctermfg=196 guibg=#f8f8ff guifg=#ff1100 gui=undercurl cterm=undercurl
 hi  ColorColumn ctermbg=254 guibg=#e4e4e4
+hi  SignColumn  guifg=#000000 guibg=#ffffe0
 " }}}
 
 " {{{ Vim => 7.0 specific colors

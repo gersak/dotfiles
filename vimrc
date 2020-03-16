@@ -37,7 +37,9 @@ Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/fzf',        { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-" Plug 'terryma/vim-multiple-cursors'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+
 
 
 " Colors
@@ -62,10 +64,11 @@ Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
 
-Plug 'justinmk/vim-dirvish'
+" Navigation and autocomplete
+Plug 'scrooloose/nerdtree'
+" Plug 'justinmk/vim-dirvish'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-" Plug 'w0rp/ale'
 " Plug 'justinmk/vim-gtfo'
 Plug 'sheerun/vim-polyglot'
 
@@ -82,6 +85,7 @@ Plug 'OmniSharp/omnisharp-vim'
 
 " Css
 Plug 'ap/vim-css-color'
+" Plug 'norcalli/nvim-colorizer.lua'
 
 " Javascript
 Plug 'pangloss/vim-javascript'
@@ -92,7 +96,7 @@ Plug 'jceb/vim-orgmode'
 
 " Lint
 " Plug 'metakirby5/codi.vim'
-" Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 
 call plug#end()
 endif
@@ -191,7 +195,7 @@ endif
 " %V Virtual column
 " %P Percentage
 " %#HighlightGroup#
-set statusline=%<[%n]\ %F\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P
+set statusline=%<[%n]\ %f\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#statusline():''}\ %=%-14.(%l,%c%V%)\ %P
 
 silent! if emoji#available()
   let s:ft_emoji = map({
@@ -271,7 +275,7 @@ silent! if emoji#available()
     let pos = ' %l,%c%V '
     let pct = ' %P '
 
-    return s:cherry.' [%n] %F %<'.mod.ro.ft.fug.sep.pos.'%{Braille()}%*'.pct.s:cherry
+    return s:cherry.' %f %<'.mod.ro.ft.fug.sep.pos.'%{Braille()}%*'.pct.s:cherry
   endfunction
 
   " Note that the "%!" expression is evaluated in the context of the
@@ -334,6 +338,8 @@ endif
 
 "  NERD Tree
 " nnoremap <C-n> :NERDTreeFind<cr>
+nnoremap <C-n> :NERDTreeToggle<cr>
+let g:NERDTreeIgnore = ['^build$','^node_modules$']
 
 "  Tagbar
 " nnoremap <silent>tt :TagbarToggle<cr>
@@ -699,7 +705,7 @@ endif
 " ----------------------------------------------------------------------------
 " ALE
   " ----------------------------------------------------------------------------
-let g:ale_linters = {'java': [], 'yaml': []}
+let g:ale_linters = {'java': [], 'yaml': [], 'clojure':['clj-kondo']}
 let g:ale_fixers = {'ruby': ['rubocop']}
 let g:ale_lint_delay = 1000
 nmap ]a <Plug>(ale_next_wrap)
@@ -759,7 +765,7 @@ augroup vimrc
 augroup END
 
 " let g:clojure_maxlines = 60
-let g:clojure_maxlines =  300
+" let g:clojure_maxlines =  300
 
 set lispwords+=match
 let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
@@ -791,12 +797,13 @@ let g:paredit_smartjump = 1
 " Deoplete
 " ----------------------------------------------------------------------------
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_delay = 200
+let g:deoplete#auto_complete_delay = 800
 let g:deoplete#keyword_patterns = {}
-" let g:deoplete#auto_complete = 'false'
+let g:deoplete#auto_complete = 'false'
 let g:deoplete#complete_method = 'omnifunc'
 let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
-let g:deoplete#auto_complete_start_length=3
+let g:deoplete#auto_complete_start_length=5
+call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
 
 
 " let g:LanguageClient_serverCommands = {
@@ -939,10 +946,10 @@ autocmd FileType clojure setlocal lispwords+=defstm,set-stm!,update-data!
 
 " SHORTCUTS
 " Clojure
-nmap <silent> <leader>r :Require<cr>
-nnoremap <leader>cr :Piggieback (adzerk.boot-cljs-repl/repl-env)<CR>
-nnoremap <leader>cn :Piggieback (cljs.repl.node/repl-env)<CR>
-nnoremap <leader>cs :Piggieback (shadow.cljs.devtools.api/nrepl-select )<CR>
+" nmap <silent> <leader>r :Require<cr>
+" nnoremap <leader>cr :Piggieback (adzerk.boot-cljs-repl/repl-env)<CR>
+" nnoremap <leader>cn :Piggieback (cljs.repl.node/repl-env)<CR>
+" nnoremap <leader>cs :Piggieback (shadow.cljs.devtools.api/nrepl-select )<CR>
 
 " function! VimuxSlime()
 "   call VimuxSendText(@v)
@@ -1001,13 +1008,41 @@ augroup END
 
 let g:conjure_log_direction = "horizontal"
 let g:conjure_quick_doc_normal_mode=v:false
-let g:conjure_log_blacklist = ["up", "ret", "ret-multiline", "load-file", "eval"]
+let g:conjure_quick_doc_insert_mode=v:false
+let g:conjure_log_auto_close=v:false
+let g:conjure_fold_multiline_results=v:false
+let g:conjure_log_blacklist = ["up", "ret", "ret-multiline", "load-file", "eval", "out", "error", "up"]
 
 
 
-" GOYO
-autocmd! User GoyoEnter Limelight
-autocmd! User GoyoLeave Limelight! 
+function! s:goyo_enter()
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status off
+    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
+  endif
+  set noshowmode
+  set noshowcmd
+  set scrolloff=999
+  Limelight
+  " ...
+endfunction
+
+function! s:goyo_leave()
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status on
+    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
+  endif
+  set showmode
+  set showcmd
+  set scrolloff=5
+  Limelight!
+  " ...
+endfunction
+
+let g:goyo_width=100
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 let g:golden_ratio_autocommand = 0
 " colorscheme gersak
