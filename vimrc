@@ -4,7 +4,7 @@ unlet! skip_defaults_vim
 silent! source $VIMRUNTIME/defaults.vim
 
 
-" let g:python_host_prog = '/usr/bin/python' 
+" let g:python_host_prog = '/usr/bin/pYthon' 
 " let g:python3_host_prog = '/usr/bin/python3' 
 
 if (empty($TMUX))
@@ -32,26 +32,30 @@ silent! if plug#begin('~/.vim/plugged')
 
 Plug 'mhinz/vim-startify'
 Plug 'easymotion/vim-easymotion'
-Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'junegunn/vim-easy-align',           { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/vim-emoji'
 Plug 'junegunn/vim-peekaboo'
-Plug 'junegunn/fzf',        { 'do': './install --all' }
+Plug 'junegunn/fzf',                      { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
 
 
-
 " Colors
 " Plug 'rafi/awesome-vim-colorschemes'
-Plug 'cormacrelf/vim-colors-github'
+" Plug 'cormacrelf/vim-colors-github'
+Plug 'dracula/vim'
+Plug 'arzg/vim-corvine'
+" Plug 'pgavlin/pulumi.vim'
+" Plug 'arzg/vim-colors-xcode'
 
 " Git
 Plug 'junegunn/gv.vim'
-Plug 'tpope/vim-fugitive', {'tag':'v3.1'}
+Plug 'tpope/vim-fugitive', {'tag':'v3.2'}
 
 " Edit
 Plug 'brooth/far.vim'
+Plug 'tpope/vim-dadbod'
 Plug 'tpope/vim-speeddating' 
 Plug 'tpope/vim-sleuth' 
 Plug 'tpope/vim-repeat'
@@ -67,15 +71,20 @@ Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
 " Navigation and autocomplete
 Plug 'scrooloose/nerdtree'
 " Plug 'justinmk/vim-dirvish'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/deoplete.nvim',        { 'do': ':UpdateRemotePlugins' }
 
 " Plug 'justinmk/vim-gtfo'
 Plug 'sheerun/vim-polyglot'
 
+" Ruby
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
+
 " Clojure
 Plug 'guns/vim-sexp'
 Plug 'jparise/vim-graphql'
-Plug 'Olical/conjure', { 'tag': 'v2.1.2', 'do': 'bin/compile' }
+Plug 'Olical/conjure', { 'tag': 'v4.3.1'}
+" Plug 'Olical/conjure', { 'tag': 'v3.2.0'}
 "
 " Python
 Plug 'vim-syntastic/syntastic'
@@ -122,7 +131,8 @@ augroup CursorLine
 augroup END
 
 set nu
-set cursorline
+" set cursorline!
+" set nocursorline
 set nonumber
 " set relativenumber
 set autoindent
@@ -159,7 +169,6 @@ set foldlevelstart=99
 set grepformat=%f:%l:%c:%m,%f:%l:%m
 " set completeopt=menuone,preview
 set completeopt=menuone
-" set nocursorline
 set nrformats=hex
 " silent! set cryptmethod=blowfish2
 " let g:netrw_liststyle=3
@@ -339,6 +348,7 @@ endif
 "  NERD Tree
 " nnoremap <C-n> :NERDTreeFind<cr>
 nnoremap <C-n> :NERDTreeToggle<cr>
+nmap <Leader>nf :NERDTreeFind<cr>
 let g:NERDTreeIgnore = ['^build$','^node_modules$']
 
 "  Tagbar
@@ -765,7 +775,7 @@ augroup vimrc
 augroup END
 
 " let g:clojure_maxlines = 60
-" let g:clojure_maxlines =  300
+let g:clojure_maxlines =  300
 
 set lispwords+=match
 let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
@@ -797,13 +807,12 @@ let g:paredit_smartjump = 1
 " Deoplete
 " ----------------------------------------------------------------------------
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete_delay = 800
-let g:deoplete#keyword_patterns = {}
 let g:deoplete#auto_complete = 'false'
 let g:deoplete#complete_method = 'omnifunc'
-let g:deoplete#keyword_patterns.clojure = '[\w!$%&*+/:<=>?@\^_~\-\.#]*'
-let g:deoplete#auto_complete_start_length=5
+autocmd FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
 call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
+call deoplete#custom#option('min_pattern_length', 5)
+call deoplete#custom#option('auto_complete_delay', 500)
 
 
 " let g:LanguageClient_serverCommands = {
@@ -913,6 +922,9 @@ set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,\\.git  " Windows
 
 "
 au BufNewFile,BufRead *.edn set filetype=clojure
+au BufNewFile,BufRead *.edm set filetype=javascript
+au BufNewFile,BufRead *.epm set filetype=javascript
+au BufNewFile,BufRead *.bb set filetype=clojure
 au BufNewFile,BufRead *.boot set filetype=clojure
 let g:clojure_align_multiline_strings = 0
 let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,defui,routes,fn'
@@ -1044,12 +1056,17 @@ let g:goyo_width=100
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
+
 let g:golden_ratio_autocommand = 0
+colorscheme dracula
 " colorscheme gersak
-colorscheme rareshack
+" colorscheme rareshack
 " colorscheme happy_hacking
 " colorscheme OceanicNext
 " colorscheme molokai
 " colorscheme github
 " colorscheme dracula
 " colorscheme PaperColor
+
+
+let g:db_klop = "postgresql://eywa:wZV2F9LZ8jeMmq7v@eywa-development.caffmhmswqhy.eu-west-1.rds.amazonaws.com:5432/klop"

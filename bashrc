@@ -110,8 +110,20 @@ if [ -e ~/.git-prompt.sh ]; then
     source ~/.git-prompt.sh
   fi
 
-# PS1='\[\e[34m\]\u\[\e[1;32m\]@\[\e[0;33m\]\h\[\e[35m\]:\[\e[m\]\w\e[1;30m$(__git_ps1)\[\e[1;31m\]> \[\e[0m\]\n'
-PS1='\[\e[34m\]\u\[\e[1;32m\]@\[\e[0;33m\]\h\[\e[35m\]:\[\e[m\]\w\e[1;31m$(__git_ps1)\[\e[1;31m\]> \[\e[m\]\n? '
+# PS1='\[\e[1;32m\]\u\[\e[1;32m\]@\[\e[0;33m\]\h\[\e[35m\]:\[\e[m\]\w\e[1;31m$(__git_ps1)\[\e[1;31m\]> \[\e[m\]\n? '
+
+
+if [ "$PLATFORM" = Linux ]; then
+  PS1="\[\e[1;38m\]\u\[\e[1;34m\]@\[\e[1;31m\]\h\[\e[1;30m\]:"
+  PS1="$PS1\[\e[0;38m\]\w\[\e[1;35m\]> \[\e[0m\]"
+else
+  ### git-prompt
+  __git_ps1() { :;}
+  if [ -e ~/.git-prompt.sh ]; then
+    source ~/.git-prompt.sh
+  fi
+  PS1='\[\e[34m\]\u\[\e[1;32m\]@\[\e[0;33m\]\h\[\e[35m\]:\[\e[m\]\w\[\e[1;30m\]$(__git_ps1)\[\e[1;31m\]> \[\e[0m\]'
+fi
 
 # Tmux tile
 # --------------------------------------------------------------------
@@ -528,6 +540,7 @@ export TZ
 export FZF_DEFAULT_OPTS="--history=$HOME/.fzf_history"
 export JAVA_HOME=~/GRAAL/graalvm-ce-java11-20.0.0
 export GRAAL_BIN=~/GRAAL/graalvm-ce-java11-20.0.0/bin
+export RBENV=$HOME/.rbenv/bin
 
 
 # export TERM=xterm-256color
@@ -536,7 +549,7 @@ export GRAAL_BIN=~/GRAAL/graalvm-ce-java11-20.0.0/bin
 # alias roboti=`cd ~/development/roboti`
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME:$GRAAL_BIN:.rvm/bin"
+export PATH="$PATH:$HOME:$GRAAL_BIN:$RBENV:.rvm/bin"
 # export DOCKER_HOST='tcp://0.0.0.0:2375'
 # source ~/.awsrc
 eval $(ssh-agent -s)
@@ -547,3 +560,4 @@ alias tubular='clj -A:tubular -m tubular.core'
 
 if [ -e /home/rgersak/.nix-profile/etc/profile.d/nix.sh ]; then . /home/rgersak/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 export GPG_TTY=$(tty)
+eval "$(rbenv init -)"

@@ -11,7 +11,7 @@ let colors_name = "rareshack"
 
 " {{{ General colors
 " hi       Normal ctermfg=0     ctermbg=255 guifg=#000000 guibg=#ffffff
-hi       Normal ctermfg=0     ctermbg=255 guifg=#000000 guibg=#fffff7
+hi       Normal ctermfg=0     ctermbg=255 guifg=#333333 guibg=#fffff7
 hi       Cursor ctermfg=239    ctermbg=15 guifg=#F8F8FF guibg=#444454
 hi       Visual ctermfg=15     ctermbg=61 guifg=#FFFFFF guibg=#3465a3
 hi    VisualNOS ctermfg=15     ctermbg=24 guifg=#FFFFFF guibg=#204a87
@@ -28,17 +28,10 @@ hi     ErrorMsg ctermbg=15    ctermfg=196 guibg=#f8f8ff guifg=#ff1100 gui=underc
 hi  ColorColumn ctermbg=254 guibg=#e4e4e4
 hi  SignColumn  guifg=#000000 guibg=#ffffe0
 " }}}
-
-" {{{ Vim => 7.0 specific colors
-if version >= 700
-    hi CursorLine ctermbg=0       guibg=#fffff7 cterm=underline gui=underline
-    hi MatchParen ctermfg=0     ctermbg=252 guifg=#000000 guibg=#ABFFE3 gui=underline cterm=underline
-    hi      Pmenu ctermfg=15      ctermbg=8 guifg=#ffffff guibg=#808080 gui=bold     cterm=bold
-    hi   PmenuSel ctermfg=0     ctermbg=252 guifg=#000000 guibg=#ABFFE3 gui=italic cterm=italic
-    hi  PmenuSbar ctermfg=238     ctermbg=0 guifg=#444444 guibg=#000000
-    hi PmenuThumb ctermfg=248   ctermbg=248 guifg=#aaaaaa guibg=#aaaaaa
-endif
-" }}}
+"
+" {{{ Popups
+hi Pmenu guifg=#5f555a guibg=#ffd394
+hi PmenuSel guifg=#5f555a guibg=#ffaa00
 
 " {{{ Diff highlighting
 hi DiffAdd    ctermfg=233 ctermbg=194 guifg=#003300 guibg=#DDFFDD gui=none cterm=none
@@ -56,7 +49,7 @@ hi       Ignore ctermfg=8     guifg=#808080
 " hi   Identifier ctermfg=31    guifg=#0086B3
 hi   Identifier ctermfg=31    guifg=#007a00
 hi      PreProc ctermfg=247   guifg=#9400AB gui=bold         cterm=bold
-hi      Comment ctermfg=246   guifg=#c3c3c3
+hi      Comment ctermfg=246   guifg=#445588
 hi     Constant ctermfg=6     guifg=#0a63cf gui=none         cterm=none
 " hi       String ctermfg=161   guifg=#007A00
 hi       String ctermfg=161   guifg=#a30a29

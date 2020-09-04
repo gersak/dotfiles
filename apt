@@ -4,4 +4,4 @@ sudo add-apt-repository ppa:neovim-ppa/stable
 
 sudo apt install openjdk-8-jdk, nodejs, neovim, python-neovim, \
                  python3-neovim, fzf, rlwrap, silversearcher-ag, \
-                 rigrep
+                 rigrep, rbenv, zlib1g-dev
