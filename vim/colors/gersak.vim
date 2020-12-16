@@ -11,7 +11,7 @@ let colors_name = "gersak"
 
 " {{{ General colors
 hi       Normal ctermfg=0     ctermbg=255 guibg=#002c47 guifg=#7affe2
-hi       Cursor ctermfg=239    ctermbg=15 guibg=#ff1100 guifg=#444454
+hi       Cursor ctermfg=239    ctermbg=15 guibg=#ff5050 guifg=#444454
 hi       Visual ctermfg=15     ctermbg=61 guibg=#FFFFFF guifg=#3465a3
 hi    VisualNOS ctermfg=15     ctermbg=24 guibg=#FFFFFF guifg=#204a87
 hi       Search ctermfg=236   ctermbg=228 guibg=#91ff82 guifg=#000000 cterm=underline      gui=underline
@@ -23,21 +23,17 @@ hi    VertSplit ctermfg=250   ctermbg=250 guibg=#002c47 guifg=#d9f7ff gui=none  
 hi       LineNr ctermfg=246    ctermbg=15 guibg=#002c47 guifg=#00638d gui=bold           cterm=bold
 hi CursorLineNr ctermfg=246    ctermbg=15 guibg=#002c47 guifg=#d9dfe3 gui=bold           cterm=bold
 hi   SpecialKey ctermfg=6   guifg=#177F80 gui=italic     cterm=italic
-hi   WarningMsg ctermfg=167 guifg=#ef5939
-hi     ErrorMsg ctermbg=15    ctermfg=196 guibg=#000000 guibg=#ff1100 gui=undercurl cterm=undercurl
+hi   WarningMsg ctermfg=0   guifg=#ef5939
+hi     ErrorMsg ctermbg=15  ctermfg=196 guifg=#000000 guibg=#ff5050
+hi        Error guifg=#000000 guibg=#ff5050
+hi         Todo ctermbg=15  ctermfg=196 guibg=#ff5050 guifg=#000000
 hi  ColorColumn ctermbg=254 guifg=#e4e4e4
+hi   SignColumn guifg=#000000 guibg=#003563
+hi   CursorLine ctermbg=0   guibg=#3e304f
 " }}}
 
-" {{{ Vim => 7.0 specific colors
-if        version >=                    700
-    hi CursorLine ctermbg=0   guibg=#002c47 cterm=underline 
-    hi MatchParen ctermfg=0     ctermbg=252 guibg=#000000   guifg=#ff1100 gui=underline cterm=underline
-    hi      Pmenu ctermfg=15      ctermbg=8 guibg=#ffffff   guifg=#808080 gui=bold           cterm=bold
-    hi   PmenuSel ctermfg=0     ctermbg=252 guibg=#000000   guifg=#ABFFE3 gui=italic       cterm=italic
-    hi  PmenuSbar ctermfg=238     ctermbg=0 guibg=#444444   guifg=#000000
-    hi PmenuThumb ctermfg=248   ctermbg=248 guibg=#aaaaaa   guifg=#aaaaaa
-endif
-" }}}
+hi Pmenu guifg=#5f555a guibg=#000000
+hi PmenuSel guifg=#5f555a guibg=#ffaa00
 
 " {{{ Diff highlighting
 hi DiffAdd    ctermfg=233 ctermbg=194 guifg=#003300 guibg=#DDFFDD gui=none cterm=none
@@ -59,10 +55,13 @@ hi     Function ctermfg=88    guifg=#f7fff5
 hi    Statement ctermfg=0     guifg=#7affe2 gui=bold        cterm=bold
 hi         Type ctermfg=60    guifg=#838bb5 gui=bold        cterm=bold
 hi       Number ctermfg=30    guifg=#c2e0ff 
-hi         Todo ctermbg=15      ctermfg=196 guibg=#ff1100 guifg=#fffff gui=underline cterm=underline
 hi        Label ctermfg=0     guifg=#FFFFFF gui=bold        cterm=bold
 hi StorageClass ctermfg=0     guifg=#00d4e8 gui=bold        cterm=bold
 hi    Structure ctermfg=0     guifg=#00d4e8 gui=bold        cterm=bold
+
+
+hi ALEError guibg=#ff5050 guifg=#000000
+hi ALEWarning guibg=#ffce6d guifg=#000000
 
 hi  SpecialChar guifg=#ffce6d gui=bold
 
@@ -70,6 +69,8 @@ hi  SpecialChar guifg=#ffce6d gui=bold
 " {{{ Clojure
 hi      Keyword ctermfg=0   guifg=#00d4e8
 hi    Delimiter ctermfg=28  guifg=#00f1f7
+hi clojureDefine ctermfg=247 guifg=#00d4e8 gui=bold         cterm=bold
+hi clojureMacro ctermfg=247  guifg=#00f1f7 gui=bold         cterm=bold
 
 " {{{ Links
 hi! link FoldColumn Folded

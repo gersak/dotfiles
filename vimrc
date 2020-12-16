@@ -30,6 +30,7 @@ endif
 
 silent! if plug#begin('~/.vim/plugged')
 
+" Plug 'preservim/tagbar'
 Plug 'mhinz/vim-startify'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align',           { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
@@ -46,12 +47,16 @@ Plug 'junegunn/limelight.vim'
 " Plug 'cormacrelf/vim-colors-github'
 Plug 'dracula/vim'
 Plug 'arzg/vim-corvine'
+Plug 'vim-scripts/Fruidle'
+" Plug 'NLKNguyen/papercolor-theme'
+" Plug 'morhetz/gruvbox'
 " Plug 'pgavlin/pulumi.vim'
 " Plug 'arzg/vim-colors-xcode'
 
 " Git
 Plug 'junegunn/gv.vim'
 Plug 'tpope/vim-fugitive', {'tag':'v3.2'}
+" Plug 'airblade/vim-gitgutter'
 
 " Edit
 Plug 'brooth/far.vim'
@@ -83,8 +88,8 @@ Plug 'tpope/vim-rails'
 " Clojure
 Plug 'guns/vim-sexp'
 Plug 'jparise/vim-graphql'
-Plug 'Olical/conjure', { 'tag': 'v4.3.1'}
-" Plug 'Olical/conjure', { 'tag': 'v3.2.0'}
+Plug 'Olical/conjure', { 'tag': 'v4.9.0'}
+" Plug 'Olical/conjure', { 'tag': 'v4.7.0'}
 "
 " Python
 Plug 'vim-syntastic/syntastic'
@@ -92,9 +97,8 @@ Plug 'vim-syntastic/syntastic'
 " C#
 Plug 'OmniSharp/omnisharp-vim'
 
-" Css
+" Colorizer
 Plug 'ap/vim-css-color'
-" Plug 'norcalli/nvim-colorizer.lua'
 
 " Javascript
 Plug 'pangloss/vim-javascript'
@@ -352,8 +356,8 @@ nmap <Leader>nf :NERDTreeFind<cr>
 let g:NERDTreeIgnore = ['^build$','^node_modules$']
 
 "  Tagbar
-" nnoremap <silent>tt :TagbarToggle<cr>
-" let g:tagbar_sort = 0
+nnoremap <silent>tt :TagbarToggle<cr>
+let g:tagbar_sort = 0
 
 
 " Movement in insert mode
@@ -635,11 +639,14 @@ runtime macros/matchit.vim
 " ----------------------------------------------------------------------------
 " ack.vim
 " ----------------------------------------------------------------------------
-if executable('ag')
-  let &grepprg = 'ag --nogroup --nocolor --column'
-else
-  let &grepprg = 'grep -rn $* *'
-endif
+set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
+
+" if executable('ag')
+"   let &grepprg = 'ag --nogroup --nocolor --column'
+" else
+"   let &grepprg = 'grep -rn $* *'
+" endif
+"
 command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 
 " ----------------------------------------------------------------------------
@@ -746,11 +753,11 @@ function! s:lisp_maps()
   nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign *\ g/^\S/<cr>gv=
   nnoremap <buffer> <leader>a{ vi{<c-v>$:EasyAlign *\ g/^\S/<cr>gv=
   nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign *\ g/^\S/<cr>gv=
-  nnoremap <buffer> <leader>rq :silent update<bar>Require<cr>
-  nnoremap <buffer> <leader>rQ :silent update<bar>Require!<cr>
-  nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
-  nmap     <buffer> <leader>*  cqp<c-r><c-w><cr>
-  nmap     <buffer> <c-]>      <Plug>FireplaceDjumpzz
+  " nnoremap <buffer> <leader>rq :silent update<bar>Require<cr>
+  " nnoremap <buffer> <leader>rQ :silent update<bar>Require!<cr>
+  " nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
+  " nmap     <buffer> <leader>*  cqp<c-r><c-w><cr>
+  " nmap     <buffer> <c-]>      <Plug>FireplaceDjumpzz
   imap     <buffer> <c-j><c-n> <c-o>(<right>.<space><left><tab>
 endfunction
 
@@ -842,7 +849,7 @@ nnoremap <silent>  <expr>     <Leader>f (expand('%') =~ 'NERD_tree' ? "\<c-w>\<c
 nnoremap <silent>  <Leader>C  :Colors<CR>
 nnoremap <silent>  <C-f>      :BLines<cr>
 nnoremap <silent>  <Leader>h  :Helptags<CR>
-nnoremap <silent>  <Leader>t  :Tags<CR>
+nnoremap <silent>  <Leader>t  :BTags<CR>
 nnoremap <silent>; :Buffers<CR>
 nnoremap <silent>  <Leader>ag :Ag       <CR>
 nnoremap <silent>  <Leader>AG :Ag       <C-R><C-A><CR>
@@ -927,8 +934,11 @@ au BufNewFile,BufRead *.epm set filetype=javascript
 au BufNewFile,BufRead *.bb set filetype=clojure
 au BufNewFile,BufRead *.boot set filetype=clojure
 let g:clojure_align_multiline_strings = 0
-let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,defui,routes,fn'
+let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,defui,routes,fn,defhook,defnc,defstyled'
 let g:clojure_fuzzy_indent_patterns=['^GET', '^POST', '^PUT', '^DELETE', '^ANY', '^HEAD', '^PATCH', '^OPTIONS', '^def', '^let', '^with', '^reg-', '^register-',  '^om', '^dom', '^defui', '^fn']
+let g:clojure_syntax_keywords = {
+      \ 'clojureMacro': ["defhook", "defstyled", "defnc"],
+      \ }
 
 " Clojure test
 autocmd FileType clojure setlocal lispwords+=describe,it
@@ -954,6 +964,8 @@ autocmd FileType clojure setlocal lispwords+=with-call-in,with-eval-in,with-pre-
 autocmd FileType clojure setlocal lispwords+=with-context,alet,mlet
 " Dreamcatcher
 autocmd FileType clojure setlocal lispwords+=defstm,set-stm!,update-data!
+" Dreamcatcher
+autocmd FileType clojure setlocal lispwords+=defhook,defstyled,defnc
 
 
 " SHORTCUTS
@@ -1058,8 +1070,12 @@ autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 
 let g:golden_ratio_autocommand = 0
-colorscheme dracula
-" colorscheme gersak
+set lazyredraw
+
+" colorscheme onehalfdark
+" colorscheme PaperColor 
+" colorscheme dracula
+colorscheme gersak
 " colorscheme rareshack
 " colorscheme happy_hacking
 " colorscheme OceanicNext
@@ -1067,6 +1083,3 @@ colorscheme dracula
 " colorscheme github
 " colorscheme dracula
 " colorscheme PaperColor
-
-
-let g:db_klop = "postgresql://eywa:wZV2F9LZ8jeMmq7v@eywa-development.caffmhmswqhy.eu-west-1.rds.amazonaws.com:5432/klop"

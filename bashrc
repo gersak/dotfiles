@@ -549,7 +549,7 @@ export RBENV=$HOME/.rbenv/bin
 # alias roboti=`cd ~/development/roboti`
 
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME:$GRAAL_BIN:$RBENV:.rvm/bin"
+export PATH="$PATH:$HOME:$GRAAL_BIN:$RBENV:.rvm/bin:$HOME/.local/bin"
 # export DOCKER_HOST='tcp://0.0.0.0:2375'
 # source ~/.awsrc
 eval $(ssh-agent -s)

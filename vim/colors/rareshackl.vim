@@ -23,8 +23,11 @@ hi    VertSplit ctermfg=250   ctermbg=250 guibg=#3e304f guifg=#8f7897 gui=none  
 hi       LineNr ctermfg=246    ctermbg=15 guibg=#524261 guifg=#8f7897 gui=bold           cterm=bold
 hi   SpecialKey ctermfg=6   guifg=#177F80 gui=italic     cterm=italic
 hi   WarningMsg ctermfg=167 guifg=#ef5939
-hi     ErrorMsg ctermbg=15    ctermfg=196 guibg=#000000 guibg=#ff1100 gui=undercurl cterm=undercurl
+hi     ErrorMsg ctermbg=15  ctermfg=196 guifg=#000000 guibg=#ff5050
+hi        Error guifg=#ff5050 guibg=#3e3040
+hi         Todo ctermbg=15      ctermfg=196 guibg=#3e3040 guifg=#ff5050
 hi  ColorColumn ctermbg=254 guifg=#e4e4e4
+hi  SignColumn  guifg=#fdedff guibg=#3e3040
 " }}}
 
 " {{{ Vim => 7.0 specific colors
@@ -62,19 +65,23 @@ hi     Function ctermfg=88    guifg=#bfccfc
 hi    Statement ctermfg=0     guifg=#c89cdf gui=bold        cterm=bold
 hi         Type ctermfg=60    guifg=#838bb5 gui=bold        cterm=bold
 hi       Number ctermfg=30    guifg=#c1eacd 
-hi         Todo ctermbg=15      ctermfg=196 guibg=#ff1100 guifg=#fffff gui=underline cterm=underline
 hi        Label ctermfg=0     guifg=#FFFFFF gui=bold        cterm=bold
 hi StorageClass ctermfg=0     guifg=#ffe8b8 gui=bold        cterm=bold
 hi    Structure ctermfg=0     guifg=#ffe8b8 gui=bold        cterm=bold
 
 hi  SpecialChar guifg=#ffce6d gui=bold
 
+" {{{ Ale
+hi ALEError guibg=#ff5050 guifg=#000000
+hi ALEWarning guibg=#ffce6d guifg=#000000
 
 " {{{ Clojure
 " hi      Keyword ctermfg=0   guifg=#c1eacd
 " hi      Keyword ctermfg=0   guifg=#d87c9f
 hi      Keyword ctermfg=0   guifg=#ffe8b8
 hi    Delimiter ctermfg=28  guifg=#7A5CFF
+hi clojureDefine ctermfg=247 guifg=#c37bed gui=bold         cterm=bold
+hi clojureMacro ctermfg=247  guifg=#aa77c7 gui=bold         cterm=bold
 
 " {{{ Links
 hi! link FoldColumn Folded
