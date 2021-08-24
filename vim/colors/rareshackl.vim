@@ -18,7 +18,7 @@ hi       Search ctermfg=236   ctermbg=228 guibg=#91ff82 guifg=#000000 cterm=unde
 hi       Folded ctermfg=8      ctermbg=15 guibg=#808080 guifg=#ECECEC gui=bold           cterm=bold
 hi        Title ctermfg=167 guifg=#91ff82
 hi   StatusLine ctermfg=238   ctermbg=250 guibg=#fdedff guifg=#3e304f gui=bold           cterm=bold
-hi StatusLineNC ctermfg=238   ctermbg=252 guibg=#fdedff guifg=#3e304f gui=italic       cterm=italic
+hi StatusLineNC ctermfg=238   ctermbg=252 guibg=#fdedff guifg=#3e304f gui=none           cterm=none
 hi    VertSplit ctermfg=250   ctermbg=250 guibg=#3e304f guifg=#8f7897 gui=none           cterm=none
 hi       LineNr ctermfg=246    ctermbg=15 guibg=#524261 guifg=#8f7897 gui=bold           cterm=bold
 hi   SpecialKey ctermfg=6   guifg=#177F80 gui=italic     cterm=italic
@@ -30,15 +30,17 @@ hi  ColorColumn ctermbg=254 guifg=#e4e4e4
 hi  SignColumn  guifg=#fdedff guibg=#3e3040
 " }}}
 
+
+
 " {{{ Vim => 7.0 specific colors
-if        version >=                    700
-    hi CursorLine ctermbg=0   guibg=#3e304f cterm=underline gui=underline
-    hi MatchParen ctermfg=0     ctermbg=252 guibg=#000000   guifg=#ABFFE3 gui=underline cterm=underline
-    hi      Pmenu ctermfg=15      ctermbg=8 guibg=#ffffff   guifg=#808080 gui=bold           cterm=bold
-    hi   PmenuSel ctermfg=0     ctermbg=252 guibg=#000000   guifg=#ABFFE3 gui=italic       cterm=italic
-    hi  PmenuSbar ctermfg=238     ctermbg=0 guibg=#444444   guifg=#000000
-    hi PmenuThumb ctermfg=248   ctermbg=248 guibg=#aaaaaa   guifg=#aaaaaa
-endif
+ if        version >=                    700
+     hi CursorLine ctermbg=0   guibg=#3e304f cterm=underline gui=underline
+     hi MatchParen ctermfg=0     ctermbg=252 guibg=#000000   guifg=#ABFFE3 gui=underline cterm=underline
+     hi      Pmenu ctermfg=15      ctermbg=8 guibg=#000000   guifg=#fdedff gui=bold           cterm=bold
+     hi   PmenuSel ctermfg=0     ctermbg=252 guibg=#000000   guifg=#ABFFE3 gui=italic       cterm=italic
+     hi  PmenuSbar ctermfg=238     ctermbg=0 guibg=#444444   guifg=#000000
+     hi PmenuThumb ctermfg=248   ctermbg=248 guibg=#aaaaaa   guifg=#aaaaaa
+ endif
 " }}}
 
 " {{{ Diff highlighting

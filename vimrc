@@ -4,8 +4,8 @@ unlet! skip_defaults_vim
 silent! source $VIMRUNTIME/defaults.vim
 
 
-" let g:python_host_prog = '/usr/bin/pYthon' 
-" let g:python3_host_prog = '/usr/bin/python3' 
+" let g:python_host_prog = '/usr/bin/pYthon'
+" let g:python3_host_prog = '/usr/bin/python3'
 
 if (empty($TMUX))
   if (has("nvim"))
@@ -61,8 +61,8 @@ Plug 'tpope/vim-fugitive', {'tag':'v3.2'}
 " Edit
 Plug 'brooth/far.vim'
 Plug 'tpope/vim-dadbod'
-Plug 'tpope/vim-speeddating' 
-Plug 'tpope/vim-sleuth' 
+Plug 'tpope/vim-speeddating'
+Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-unimpaired'
@@ -73,10 +73,14 @@ Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
 
+" GRPC
+Plug 'uarun/vim-protobuf'
+
 " Navigation and autocomplete
 Plug 'scrooloose/nerdtree'
 " Plug 'justinmk/vim-dirvish'
 Plug 'Shougo/deoplete.nvim',        { 'do': ':UpdateRemotePlugins' }
+Plug 'Shougo/context_filetype.vim'
 
 " Plug 'justinmk/vim-gtfo'
 Plug 'sheerun/vim-polyglot'
@@ -88,11 +92,14 @@ Plug 'tpope/vim-rails'
 " Clojure
 Plug 'guns/vim-sexp'
 Plug 'jparise/vim-graphql'
-Plug 'Olical/conjure', { 'tag': 'v4.9.0'}
-" Plug 'Olical/conjure', { 'tag': 'v4.7.0'}
+Plug 'Olical/conjure', { 'tag': 'v4.21.0'}
+" Plug 'Olical/conjure', { 'tag': 'v4.17.0'}
 "
 " Python
 Plug 'vim-syntastic/syntastic'
+Plug 'davidhalter/jedi-vim'
+Plug 'deoplete-plugins/deoplete-jedi'
+" Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 
 " C#
 Plug 'OmniSharp/omnisharp-vim'
@@ -655,7 +662,7 @@ command! -nargs=1 -bar Grep execute 'silent! grep! <q-args>' | redraw! | copen
 silent! if has_key(g:plugs, 'vim-after-object')
   autocmd VimEnter * silent! call after_object#enable('=', ':', '#', ' ', '|')
 endif
-" 
+"
 " ----------------------------------------------------------------------------
 " <Enter> | vim-easy-align
 " ----------------------------------------------------------------------------
@@ -723,8 +730,19 @@ endif
 " ALE
   " ----------------------------------------------------------------------------
 let g:ale_linters = {'java': [], 'yaml': [], 'clojure':['clj-kondo']}
-let g:ale_fixers = {'ruby': ['rubocop']}
+let g:ale_fixers = {
+      \'ruby': ['rubocop'],
+      \'*':['remove_trailing_lines','trim_whitespace'],
+      \'javascript':['prettier','eslint'],
+      \'json':['prettier','jq','eslint'],
+      \'xml':['xmllint'],
+      \'scss':['prettier'],
+      \'sass':['prettier'],
+      \'css':['prettier'],
+      \}
 let g:ale_lint_delay = 1000
+" let g:ale_fix_on_save = 1
+
 nmap ]a <Plug>(ale_next_wrap)
 nmap [a <Plug>(ale_previous_wrap)
 
@@ -814,9 +832,9 @@ let g:paredit_smartjump = 1
 " Deoplete
 " ----------------------------------------------------------------------------
 let g:deoplete#enable_at_startup = 1
-let g:deoplete#auto_complete = 'false'
-let g:deoplete#complete_method = 'omnifunc'
-autocmd FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
+" let g:deoplete#auto_complete = 'false'
+" let g:deoplete#complete_method = 'omnifunc'
+" autocmd FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
 call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
 call deoplete#custom#option('min_pattern_length', 5)
 call deoplete#custom#option('auto_complete_delay', 500)
@@ -860,7 +878,7 @@ nnoremap <silent>  <Leader>`  :Marks<CR>
 " imap <c-x><c-f> <plug>(fzf-complete-path)
 " imap <c-x><c-j> <plug>(fzf-complete-file-ag)
 " imap <c-x><c-l> <plug>(fzf-complete-line)
- 
+
 nmap <leader><tab> <plug>(fzf-maps-n)
 xmap <leader><tab> <plug>(fzf-maps-x)
 omap <leader><tab> <plug>(fzf-maps-o)
@@ -926,19 +944,40 @@ set diffopt+=iwhite
 set wildignore+=*/target/*,*/tmp/*,*.so,*.swp,*.zip,/.git     " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,\\.git  " Windows
 
+let g:clojure_align_multiline_strings = 0
+let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,defui,routes,fn,defhook,defnc,defstyled,defstm'
+let g:clojure_fuzzy_indent_patterns=['^GET', '^POST', '^PUT', '^DELETE', '^ANY', '^HEAD', '^PATCH', '^OPTIONS', '^def', '^let', '^with', '^reg-', '^register-',  '^om', '^dom', '^defui', '^fn', '^defnc','^defhook','^defstm']
+let g:clojure_syntax_keywords = {
+      \ 'clojureMacro': ["defhook", "defstyled", "defnc", "defstm"],
+      \ }
+
+
 
 "
 au BufNewFile,BufRead *.edn set filetype=clojure
-au BufNewFile,BufRead *.edm set filetype=javascript
-au BufNewFile,BufRead *.epm set filetype=javascript
+au BufNewFile,BufRead *.edm set filetype=json
+au BufNewFile,BufRead *.epm set filetype=json
 au BufNewFile,BufRead *.bb set filetype=clojure
 au BufNewFile,BufRead *.boot set filetype=clojure
-let g:clojure_align_multiline_strings = 0
-let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,defui,routes,fn,defhook,defnc,defstyled'
-let g:clojure_fuzzy_indent_patterns=['^GET', '^POST', '^PUT', '^DELETE', '^ANY', '^HEAD', '^PATCH', '^OPTIONS', '^def', '^let', '^with', '^reg-', '^register-',  '^om', '^dom', '^defui', '^fn']
-let g:clojure_syntax_keywords = {
-      \ 'clojureMacro': ["defhook", "defstyled", "defnc"],
-      \ }
+au BufNewFile,BufRead *.py set filetype=python
+
+autocmd FileType python setlocal tabstop=4
+autocmd FileType python setlocal softtabstop=4
+autocmd FileType python setlocal shiftwidth=4
+autocmd FileType python setlocal textwidth=79
+autocmd FileType python setlocal expandtab
+autocmd FileType python setlocal autoindent
+autocmd FileType python setlocal fileformat=unix
+
+" let g:neomake_python_python_maker = neomake#makers#ft#python#python()
+" let g:neomake_python_flake8_maker = neomake#makers#ft#python#flake8()
+" let g:neomake_python_python_maker.exe = 'python3 -m py_compile'
+" let g:neomake_python_flake8_maker.exe = 'python3 -m flake8'
+
+" au BufNewFile,BufRead *.js, *.html, *.css
+"     \ setlocal tabstop=2
+"     \ setlocal softtabstop=2
+"     \ setlocal shiftwidth=2
 
 " Clojure test
 autocmd FileType clojure setlocal lispwords+=describe,it
@@ -1069,11 +1108,18 @@ autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 
+" JEDI
+let g:jedi#completions_enabled = 0
+" let g:deoplete#enable_at_startup = 1
+" let g:deoplete#sources#jedi#show_docstring = 1
+" let g:deoplete#enable_ignore_case = 1
+" let g:deoplete#enable_smart_case = 1
+
 let g:golden_ratio_autocommand = 0
 set lazyredraw
 
 " colorscheme onehalfdark
-" colorscheme PaperColor 
+" colorscheme PaperColor
 " colorscheme dracula
 colorscheme gersak
 " colorscheme rareshack

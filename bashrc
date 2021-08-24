@@ -561,3 +561,7 @@ alias tubular='clj -A:tubular -m tubular.core'
 if [ -e /home/rgersak/.nix-profile/etc/profile.d/nix.sh ]; then . /home/rgersak/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 export GPG_TTY=$(tty)
 eval "$(rbenv init -)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

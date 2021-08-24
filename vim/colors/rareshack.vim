@@ -17,7 +17,7 @@ hi       Search ctermfg=236   ctermbg=228 guifg=#204a87 guibg=#e8e8e8 cterm=unde
 hi       Folded ctermfg=8      ctermbg=15 guifg=#808080 guibg=#ECECEC gui=bold           cterm=bold
 hi        Title ctermfg=167 guifg=#ef5939
 hi   StatusLine ctermfg=238   ctermbg=250 guibg=#303030 guifg=#ffffff gui=bold           cterm=bold
-hi StatusLineNC ctermfg=238   ctermbg=252 guifg=#303030 guibg=#eeeeee  gui=italic       cterm=italic
+hi StatusLineNC ctermfg=238   ctermbg=252 guifg=#303030 guibg=#eeeeee gui=none           cterm=none
 hi    VertSplit ctermfg=250   ctermbg=250 guifg=#eeeeee guibg=#ffffff gui=none           cterm=none
 hi       LineNr ctermfg=246    ctermbg=15 guifg=#dddddd guibg=#ffffff gui=bold           cterm=bold
 hi   SpecialKey ctermfg=6   guifg=#177F80 gui=italic     cterm=italic
