@@ -1,0 +1,14 @@
+{:lint-as {hx.react/defnc clojure.core/defn
+           helix.core/defnc clojure.core/defn
+           helix.core/defhook clojure.core/defn
+           dreamcatcher.core/defstm clojure.core/def
+           io.pedestal.interceptor.helpers/defhandler clojure.core/defn
+           io.pedestal.interceptor.helpers/defafter clojure.core/defn
+           io.pedestal.interceptor.helpers/defbefore clojure.core/defn
+           next.jdbc/with-transaction clojure.core/let
+           neyho.eywa.graphql.query/compile-graphql clojure.core/def
+           emotion.core/defcss clojure.core/defn
+           emotion.core/defcss-when clojure.core/defn
+           emotion.core/defstyled clojure.core/def
+           cljsc.core/defstyled clojure.core/def}
+ :skip-comments true}
