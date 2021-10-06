@@ -45,6 +45,7 @@ Plug 'junegunn/limelight.vim'
 " Colors
 " Plug 'rafi/awesome-vim-colorschemes'
 " Plug 'cormacrelf/vim-colors-github'
+Plug 'NLKNguyen/papercolor-theme'
 Plug 'dracula/vim'
 Plug 'arzg/vim-corvine'
 Plug 'vim-scripts/Fruidle'
@@ -55,7 +56,7 @@ Plug 'vim-scripts/Fruidle'
 
 " Git
 Plug 'junegunn/gv.vim'
-Plug 'tpope/vim-fugitive', {'tag':'v3.2'}
+Plug 'tpope/vim-fugitive', {'tag':'v3.4'}
 " Plug 'airblade/vim-gitgutter'
 
 " Edit
@@ -78,9 +79,9 @@ Plug 'uarun/vim-protobuf'
 
 " Navigation and autocomplete
 Plug 'scrooloose/nerdtree'
-" Plug 'justinmk/vim-dirvish'
 Plug 'Shougo/deoplete.nvim',        { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/context_filetype.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Plug 'justinmk/vim-gtfo'
 Plug 'sheerun/vim-polyglot'
@@ -92,7 +93,7 @@ Plug 'tpope/vim-rails'
 " Clojure
 Plug 'guns/vim-sexp'
 Plug 'jparise/vim-graphql'
-Plug 'Olical/conjure', { 'tag': 'v4.21.0'}
+Plug 'Olical/conjure', { 'tag': 'v4.22.0'}
 " Plug 'Olical/conjure', { 'tag': 'v4.17.0'}
 "
 " Python
@@ -109,6 +110,10 @@ Plug 'ap/vim-css-color'
 
 " Javascript
 Plug 'pangloss/vim-javascript'
+
+" Dart
+Plug 'dart-lang/dart-vim-plugin'
+Plug 'thosakwe/vim-flutter'
 
 " Others
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
@@ -220,6 +225,7 @@ set statusline=%<[%n]\ %f\ %m%r%y\ %{exists('g:loaded_fugitive')?fugitive#status
 silent! if emoji#available()
   let s:ft_emoji = map({
     \ 'c':          'baby_chick',
+    \ 'dart':       'monkey',
     \ 'clojure':    'lollipop',
     \ 'coffee':     'coffee',
     \ 'cpp':        'chicken',
@@ -635,7 +641,7 @@ nmap gcc <Plug>CommentaryLine
 " ----------------------------------------------------------------------------
 " vim-fugitive
 " ----------------------------------------------------------------------------
-nmap     <Leader>g :Gstatus<CR>gg<c-n>
+nmap     <Leader>g :Git<CR>gg<c-n>
 nnoremap <Leader>d :Gdiff<CR>
 
 " ----------------------------------------------------------------------------
@@ -731,6 +737,7 @@ endif
   " ----------------------------------------------------------------------------
 let g:ale_linters = {'java': [], 'yaml': [], 'clojure':['clj-kondo']}
 let g:ale_fixers = {
+      \'dart':['dartfmt'],
       \'ruby': ['rubocop'],
       \'*':['remove_trailing_lines','trim_whitespace'],
       \'javascript':['prettier','eslint'],
@@ -741,6 +748,7 @@ let g:ale_fixers = {
       \'css':['prettier'],
       \}
 let g:ale_lint_delay = 1000
+let g:ale_completion_enabled = 0
 " let g:ale_fix_on_save = 1
 
 nmap ]a <Plug>(ale_next_wrap)
@@ -764,6 +772,18 @@ autocmd! FileType GV nnoremap <buffer> <silent> + :call <sid>gv_expand()<cr>
 let g:undotree_WindowLayout = 2
 nnoremap U :UndotreeToggle<CR>
 
+
+
+" ----------------------------------------------------------------------------
+" Dart
+" ----------------------------------------------------------------------------
+let dart_html_in_string=v:true
+let g:dart_style_guide = 2
+let g:dart_format_on_save = 1
+let g:dartfmt_options = ['--fix', '-l', '120']
+" let g:ale_dart_analysis_server_executable = '/usr/local/bin/dart'
+" let g:ale_dart_dartfmt_executable = '/usr/lib/dart/bin/dartfmt'
+
 " ----------------------------------------------------------------------------
 " clojure
 " ----------------------------------------------------------------------------
@@ -771,11 +791,6 @@ function! s:lisp_maps()
   nnoremap <buffer> <leader>a[ vi[<c-v>$:EasyAlign *\ g/^\S/<cr>gv=
   nnoremap <buffer> <leader>a{ vi{<c-v>$:EasyAlign *\ g/^\S/<cr>gv=
   nnoremap <buffer> <leader>a( vi(<c-v>$:EasyAlign *\ g/^\S/<cr>gv=
-  " nnoremap <buffer> <leader>rq :silent update<bar>Require<cr>
-  " nnoremap <buffer> <leader>rQ :silent update<bar>Require!<cr>
-  " nnoremap <buffer> <leader>rt :silent update<bar>RunTests<cr>
-  " nmap     <buffer> <leader>*  cqp<c-r><c-w><cr>
-  " nmap     <buffer> <c-]>      <Plug>FireplaceDjumpzz
   imap     <buffer> <c-j><c-n> <c-o>(<right>.<space><left><tab>
 endfunction
 
@@ -790,12 +805,7 @@ function! s:countdown(message, seconds)
 endfunction
 
 augroup vimrc
-  " autocmd FileType lisp,clojure,scheme RainbowParentheses
   autocmd FileType lisp,clojure,scheme call <sid>lisp_maps()
-
-  " Clojure
-  " autocmd FileType clojure xnoremap <buffer> <Enter> :Eval<CR>
-  " autocmd FileType clojure nmap <buffer> <Enter> cpp
 
 augroup END
 
@@ -807,6 +817,43 @@ let g:clojure_fuzzy_indent_patterns = ['^with', '^def', '^let']
 
 " let g:rainbow#pairs = [['(', ')'], ['[', ']'], ['{', '}']]
 let g:paredit_smartjump = 1
+
+" Clojure test
+autocmd FileType clojure setlocal lispwords+=describe,it
+" Core.match
+autocmd FileType clojure setlocal lispwords+=match
+" Compojure-api
+autocmd FileType clojure setlocal lispwords+=context,swaggered,middleware,context*
+" Midje
+autocmd FileType clojure setlocal lispwords+=fact,facts,provided,fact-group
+" Core.logic
+autocmd FileType clojure setlocal lispwords+=run*
+" Cljs
+autocmd FileType clojure setlocal lispwords+=this-as
+" Plumbing
+autocmd FileType clojure setlocal lispwords+=for-map,fnk,letk
+" Core.async
+autocmd FileType clojure setlocal lispwords+=go-loop
+" Chesire
+autocmd FileType clojure setlocal lispwords+=add-encoder
+" Boot
+autocmd FileType clojure setlocal lispwords+=with-call-in,with-eval-in,with-pre-wrap,with-post-wrap
+" Cats
+autocmd FileType clojure setlocal lispwords+=with-context,alet,mlet
+" Dreamcatcher
+autocmd FileType clojure setlocal lispwords+=defstm,set-stm!,update-data!
+" Dreamcatcher
+autocmd FileType clojure setlocal lispwords+=defhook,defstyled,defnc
+
+let g:clojure_align_multiline_strings = 0
+let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,defui,routes,fn,defhook,defnc,defstyled,defstm'
+let g:clojure_fuzzy_indent_patterns=['^GET', '^POST', '^PUT', '^DELETE', '^ANY', '^HEAD', '^PATCH', '^OPTIONS', '^def', '^let', '^with', '^reg-', '^register-',  '^om', '^dom', '^defui', '^fn', '^defnc','^defhook','^defstm']
+let g:clojure_syntax_keywords = {
+      \ 'clojureMacro': ["defhook", "defstyled", "defnc", "defstm"],
+      \ }
+
+
+
 
 " ----------------------------------------------------------------------------
 " vim-markdown
@@ -838,6 +885,9 @@ let g:deoplete#enable_at_startup = 1
 call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
 call deoplete#custom#option('min_pattern_length', 5)
 call deoplete#custom#option('auto_complete_delay', 500)
+
+autocmd FileType dart call deoplete#custom#buffer_option('auto_complete', v:false)
+
 
 
 " let g:LanguageClient_serverCommands = {
@@ -944,14 +994,6 @@ set diffopt+=iwhite
 set wildignore+=*/target/*,*/tmp/*,*.so,*.swp,*.zip,/.git     " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,\\.git  " Windows
 
-let g:clojure_align_multiline_strings = 0
-let g:clojure_special_indent_words = 'deftype,defrecord,reify,proxy,extend-type,extend-protocol,letfn,defui,routes,fn,defhook,defnc,defstyled,defstm'
-let g:clojure_fuzzy_indent_patterns=['^GET', '^POST', '^PUT', '^DELETE', '^ANY', '^HEAD', '^PATCH', '^OPTIONS', '^def', '^let', '^with', '^reg-', '^register-',  '^om', '^dom', '^defui', '^fn', '^defnc','^defhook','^defstm']
-let g:clojure_syntax_keywords = {
-      \ 'clojureMacro': ["defhook", "defstyled", "defnc", "defstm"],
-      \ }
-
-
 
 "
 au BufNewFile,BufRead *.edn set filetype=clojure
@@ -968,64 +1010,6 @@ autocmd FileType python setlocal textwidth=79
 autocmd FileType python setlocal expandtab
 autocmd FileType python setlocal autoindent
 autocmd FileType python setlocal fileformat=unix
-
-" let g:neomake_python_python_maker = neomake#makers#ft#python#python()
-" let g:neomake_python_flake8_maker = neomake#makers#ft#python#flake8()
-" let g:neomake_python_python_maker.exe = 'python3 -m py_compile'
-" let g:neomake_python_flake8_maker.exe = 'python3 -m flake8'
-
-" au BufNewFile,BufRead *.js, *.html, *.css
-"     \ setlocal tabstop=2
-"     \ setlocal softtabstop=2
-"     \ setlocal shiftwidth=2
-
-" Clojure test
-autocmd FileType clojure setlocal lispwords+=describe,it
-" Core.match
-autocmd FileType clojure setlocal lispwords+=match
-" Compojure-api
-autocmd FileType clojure setlocal lispwords+=context,swaggered,middleware,context*
-" Midje
-autocmd FileType clojure setlocal lispwords+=fact,facts,provided,fact-group
-" Core.logic
-autocmd FileType clojure setlocal lispwords+=run*
-" Cljs
-autocmd FileType clojure setlocal lispwords+=this-as
-" Plumbing
-autocmd FileType clojure setlocal lispwords+=for-map,fnk,letk
-" Core.async
-autocmd FileType clojure setlocal lispwords+=go-loop
-" Chesire
-autocmd FileType clojure setlocal lispwords+=add-encoder
-" Boot
-autocmd FileType clojure setlocal lispwords+=with-call-in,with-eval-in,with-pre-wrap,with-post-wrap
-" Cats
-autocmd FileType clojure setlocal lispwords+=with-context,alet,mlet
-" Dreamcatcher
-autocmd FileType clojure setlocal lispwords+=defstm,set-stm!,update-data!
-" Dreamcatcher
-autocmd FileType clojure setlocal lispwords+=defhook,defstyled,defnc
-
-
-" SHORTCUTS
-" Clojure
-" nmap <silent> <leader>r :Require<cr>
-" nnoremap <leader>cr :Piggieback (adzerk.boot-cljs-repl/repl-env)<CR>
-" nnoremap <leader>cn :Piggieback (cljs.repl.node/repl-env)<CR>
-" nnoremap <leader>cs :Piggieback (shadow.cljs.devtools.api/nrepl-select )<CR>
-
-" function! VimuxSlime()
-"   call VimuxSendText(@v)
-"   call VimuxSendKeys("Enter")
-" endfunction
-
-" If text is selected, save it in the v buffer and send that buffer it to tmux
-" vmap <LocalLeader>vs "vy :call VimuxSlime()<CR>
-
-" Select current paragraph and send it to tmux
-" nmap <LocalLeader>vs vip<LocalLeader>vs<CR>
-
-
 
 " Jump to anywhere you want with minimal keystrokes, with just one key binding.
 " `s{char}{label}`
@@ -1107,6 +1091,144 @@ let g:goyo_width=100
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
+" CoC
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+"                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>p  <Plug>(coc-format-selected)
+nmap <leader>p  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Map function and class text objects
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
 
 " JEDI
 let g:jedi#completions_enabled = 0
@@ -1119,9 +1241,9 @@ let g:golden_ratio_autocommand = 0
 set lazyredraw
 
 " colorscheme onehalfdark
-" colorscheme PaperColor
+colorscheme PaperColor
 " colorscheme dracula
-colorscheme gersak
+" colorscheme gersak
 " colorscheme rareshack
 " colorscheme happy_hacking
 " colorscheme OceanicNext
