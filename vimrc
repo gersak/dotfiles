@@ -30,7 +30,7 @@ endif
 
 silent! if plug#begin('~/.vim/plugged')
 
-" Plug 'preservim/tagbar'
+Plug 'preservim/tagbar'
 Plug 'mhinz/vim-startify'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align',           { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
@@ -68,7 +68,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-endwise'
+" Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
@@ -79,9 +79,10 @@ Plug 'uarun/vim-protobuf'
 
 " Navigation and autocomplete
 Plug 'scrooloose/nerdtree'
-Plug 'Shougo/deoplete.nvim',        { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/context_filetype.vim'
+" Plug 'Shougo/context_filetype.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'NoahTheDuke/coc-clojure'
+Plug 'jlesquembre/coc-conjure'
 
 " Plug 'justinmk/vim-gtfo'
 Plug 'sheerun/vim-polyglot'
@@ -93,13 +94,11 @@ Plug 'tpope/vim-rails'
 " Clojure
 Plug 'guns/vim-sexp'
 Plug 'jparise/vim-graphql'
-Plug 'Olical/conjure', { 'tag': 'v4.22.0'}
+Plug 'Olical/conjure', { 'tag': 'v4.26.0'}
 " Plug 'Olical/conjure', { 'tag': 'v4.17.0'}
 "
 " Python
 Plug 'vim-syntastic/syntastic'
-Plug 'davidhalter/jedi-vim'
-Plug 'deoplete-plugins/deoplete-jedi'
 " Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 
 " C#
@@ -396,7 +395,7 @@ inoremap qq <Esc>
 nnoremap Q @q
 
 " Last inserted text
-nnoremap g. :normal! `[v`]<cr><left>
+" nnoremap g. :normal! `[v`]<cr><left>
 
 " ----------------------------------------------------------------------------
 " Markdown headings
@@ -641,7 +640,7 @@ nmap gcc <Plug>CommentaryLine
 " ----------------------------------------------------------------------------
 " vim-fugitive
 " ----------------------------------------------------------------------------
-nmap     <Leader>g :Git<CR>gg<c-n>
+nmap     <Leader>g :Git<CR>
 nnoremap <Leader>d :Gdiff<CR>
 
 " ----------------------------------------------------------------------------
@@ -878,15 +877,15 @@ let g:clojure_syntax_keywords = {
 " ----------------------------------------------------------------------------
 " Deoplete
 " ----------------------------------------------------------------------------
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 " let g:deoplete#auto_complete = 'false'
 " let g:deoplete#complete_method = 'omnifunc'
 " autocmd FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
-call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
-call deoplete#custom#option('min_pattern_length', 5)
-call deoplete#custom#option('auto_complete_delay', 500)
+" call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
+" call deoplete#custom#option('min_pattern_length', 5)
+" call deoplete#custom#option('auto_complete_delay', 500)
 
-autocmd FileType dart call deoplete#custom#buffer_option('auto_complete', v:false)
+" autocmd FileType dart call deoplete#custom#buffer_option('auto_complete', v:false)
 
 
 
@@ -909,6 +908,8 @@ if has('nvim')
   let $FZF_DEFAULT_OPTS .= ' --inline-info'
   " let $NVIM_TUI_ENABLE_TRUE_COLOR = 1
 endif
+
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
@@ -1030,36 +1031,12 @@ map <Leader>k <Plug>(easymotion-k)
 " nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 " nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
-" Dirvish
-let g:dirvish_mode = ':sort ,^.*[\/],'
-let g:loaded_netrwPlugin = 1
-command! -nargs=? -complete=dir Explore Dirvish <args>
-command! -nargs=? -complete=dir Sexplore belowright split | silent Dirvish <args>
-command! -nargs=? -complete=dir Vexplore leftabove vsplit | silent Dirvish <args>
-augroup dirvish_config
-  autocmd!
-
-  " Map `t` to open in new tab.
-  autocmd FileType dirvish
-        \  nnoremap <silent><buffer> t :call dirvish#open('tabedit', 0)<CR>
-        \ |xnoremap <silent><buffer> t :call dirvish#open('tabedit', 0)<CR>
-
-  " Map `gr` to reload.
-  autocmd FileType dirvish nnoremap <silent><buffer>
-        \ gr :<C-U>Dirvish %<CR>
-
-  " Map `gh` to hide dot-prefixed files.  Press `R` to "toggle" (reload).
-  autocmd FileType dirvish nnoremap <silent><buffer>
-        \ gh :silent keeppatterns g@\v/\.[^\/]+/?$@d _<cr>:setl cole=3<cr>
-augroup END
-
 let g:conjure_log_direction = "horizontal"
 let g:conjure_quick_doc_normal_mode=v:false
 let g:conjure_quick_doc_insert_mode=v:false
 let g:conjure_log_auto_close=v:false
 let g:conjure_fold_multiline_results=v:false
 let g:conjure_log_blacklist = ["up", "ret", "ret-multiline", "load-file", "eval", "out", "error", "up"]
-
 
 
 function! s:goyo_enter()
@@ -1102,6 +1079,11 @@ inoremap <silent><expr> <TAB>
 
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -1129,6 +1111,10 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+
+"
+inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1, 1)\<cr>" : "\<Right>"
+inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0, -1)\<cr>" : "\<Left>"
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -1229,13 +1215,6 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-
-" JEDI
-let g:jedi#completions_enabled = 0
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#sources#jedi#show_docstring = 1
-" let g:deoplete#enable_ignore_case = 1
-" let g:deoplete#enable_smart_case = 1
 
 let g:golden_ratio_autocommand = 0
 set lazyredraw
