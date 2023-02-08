@@ -35,34 +35,37 @@ Plug 'mhinz/vim-startify'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align',           { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/vim-emoji'
-Plug 'junegunn/vim-peekaboo'
 Plug 'junegunn/fzf',                      { 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 
 " Colors
 " Plug 'rafi/awesome-vim-colorschemes'
 " Plug 'cormacrelf/vim-colors-github'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'dracula/vim'
+" Plug 'NLKNguyen/papercolor-theme'
+Plug 'yasukotelin/shirotelin'
+Plug 'bignimbus/pop-punk.vim'
+Plug 'pineapplegiant/spaceduck'
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
+Plug 'sainnhe/everforest'
+" Plug 'dracula/vim'
+Plug 'EdenEast/nightfox.nvim'
 Plug 'arzg/vim-corvine'
 Plug 'vim-scripts/Fruidle'
-" Plug 'NLKNguyen/papercolor-theme'
 " Plug 'morhetz/gruvbox'
 " Plug 'pgavlin/pulumi.vim'
 " Plug 'arzg/vim-colors-xcode'
 
 " Git
 Plug 'junegunn/gv.vim'
-Plug 'tpope/vim-fugitive', {'tag':'v3.4'}
+Plug 'tpope/vim-fugitive', {'tag':'v3.6'}
 " Plug 'airblade/vim-gitgutter'
 
 " Edit
-Plug 'brooth/far.vim'
-Plug 'tpope/vim-dadbod'
-Plug 'tpope/vim-speeddating'
+" Plug 'brooth/far.vim'
+" Plug 'tpope/vim-dadbod'
+" Plug 'tpope/vim-speeddating'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
@@ -74,8 +77,8 @@ Plug 'tpope/vim-commentary',        { 'on': '<Plug>Commentary' }
 Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'mbbill/undotree',             { 'on': 'UndotreeToggle'   }
 
-" GRPC
-Plug 'uarun/vim-protobuf'
+" Markdown
+Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install'}
 
 " Navigation and autocomplete
 " Plug 'scrooloose/nerdtree'
@@ -85,10 +88,11 @@ Plug 'kyazdani42/nvim-tree.lua'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'NoahTheDuke/coc-clojure'
 Plug 'jlesquembre/coc-conjure'
+Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 let g:coc_global_extensions = ['coc-conjure']
 
 " Plug 'justinmk/vim-gtfo'
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 
 " Ruby
 Plug 'vim-ruby/vim-ruby'
@@ -97,12 +101,15 @@ Plug 'tpope/vim-rails'
 " Clojure
 Plug 'guns/vim-sexp'
 Plug 'jparise/vim-graphql'
-Plug 'Olical/conjure', { 'tag': 'v4.28.0'}
-" Plug 'Olical/conjure', { 'tag': 'v4.17.0'}
+Plug 'Olical/conjure', { 'tag': 'v4.30.1'}
+" Plug 'guns/vim-clojure-highlight', {'for': ['clojure', 'fennel']}
 "
 " Python
 Plug 'vim-syntastic/syntastic'
 " Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+
+" Rust
+Plug 'rust-lang/rust.vim'
 
 " C#
 Plug 'OmniSharp/omnisharp-vim'
@@ -111,19 +118,19 @@ Plug 'OmniSharp/omnisharp-vim'
 Plug 'ap/vim-css-color'
 
 " Javascript
-Plug 'pangloss/vim-javascript'
+" Plug 'pangloss/vim-javascript'
 
 " Dart
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'thosakwe/vim-flutter'
+" Plug 'dart-lang/dart-vim-plugin'
+" Plug 'thosakwe/vim-flutter'
 
 " Others
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
-Plug 'jceb/vim-orgmode'
+" Plug 'jceb/vim-orgmode'
 
 " Lint
 " Plug 'metakirby5/codi.vim'
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 
 call plug#end()
 endif
@@ -148,11 +155,11 @@ augroup CursorLine
   au WinLeave * setlocal nocursorline
 augroup END
 
-set nu
+" set nu
 " set cursorline!
 " set nocursorline
 set nonumber
-" set relativenumber
+set norelativenumber
 set autoindent
 set smartindent
 set lazyredraw
@@ -176,8 +183,9 @@ set shiftwidth=2
 set expandtab smarttab
 set scrolloff=5
 set encoding=utf-8
-set list
-set listchars=tab:\|\ ,
+" set list
+" set listchars=tab:\|\ ,
+set nolist
 set virtualedit=block
 set nojoinspaces
 set diffopt=filler,vertical
@@ -365,8 +373,38 @@ endif
 " ============================================================================
 
 lua << EOF
-require'nvim-tree'.setup()
+-- examples for your init.lua
+
+-- disable netrw at the very start of your init.lua (strongly advised)
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
+
+-- empty setup using defaults
+-- require("nvim-tree").setup()
+
+-- OR setup with some options
+require("nvim-tree").setup({
+  sort_by = "case_sensitive",
+  view = {
+    width = 30,
+    mappings = {
+      list = {
+        { key = "u", action = "dir_up" },
+      },
+    },
+  },
+  renderer = {
+    group_empty = true,
+  },
+  filters = {
+    dotfiles = true,
+  },
+})
 EOF
+
 
 nnoremap <C-n> :NvimTreeToggle<CR>
 nnoremap <leader>r :NvimTreeRefresh<CR>
@@ -381,15 +419,6 @@ nnoremap <leader>n :NvimTreeFindFile<CR>
 nnoremap <silent>tt :TagbarToggle<cr>
 let g:tagbar_sort = 0
 
-
-" Movement in insert mode
-" inoremap <C-h> <C-o>h
-" inoremap <C-l> <C-o>a
-" inoremap <C-j> <C-o>j
-" inoremap <C-k> <C-o>k
-" inoremap <C-^> <C-o><C-^>
-
-tnoremap <Esc><Esc> <c-\><c-n>
 
 " Completion
 inoremap <C-Space> <C-x><C-o>
@@ -457,21 +486,6 @@ nnoremap <leader>bs :cex []<BAR>bufdo vimgrepadd @@g %<BAR>cw<s-left><s-left><ri
 " " ----------------------------------------------------------------------------
 " inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
 
-
-" " }}}
-" " ============================================================================
-" " FUNCTIONS & COMMANDS {{{
-" " ============================================================================
-
-" " ----------------------------------------------------------------------------
-" " :Chomp
-" " ----------------------------------------------------------------------------
-" command! Chomp %s/\s\+$// | normal! ``
-
-" " ----------------------------------------------------------------------------
-" " :Count
-" " ----------------------------------------------------------------------------
-" command! -nargs=1 Count execute printf('%%s/%s//gn', escape(<q-args>, '/')) | normal! ``
 
 " ----------------------------------------------------------------------------
 " :CopyRTF
@@ -788,7 +802,7 @@ nnoremap U :UndotreeToggle<CR>
 " ----------------------------------------------------------------------------
 let dart_html_in_string=v:true
 let g:dart_style_guide = 2
-let g:dart_format_on_save = 1
+let g:dart_format_on_save = 0
 let g:dartfmt_options = ['--fix', '-l', '120']
 " let g:ale_dart_analysis_server_executable = '/usr/local/bin/dart'
 " let g:ale_dart_dartfmt_executable = '/usr/lib/dart/bin/dartfmt'
@@ -862,14 +876,16 @@ let g:clojure_syntax_keywords = {
       \ }
 
 
-autocmd BufReadCmd,FileReadCmd,SourceCmd jar:file://* call s:LoadClojureContent(expand("<amatch>"))
- function! s:LoadClojureContent(uri)
+
+function! s:LoadClojureContent(uri)
   setfiletype clojure
   let content = CocRequest('clojure-lsp', 'clojure/dependencyContents', {'uri': a:uri})
   call setline(1, split(content, "\n"))
   setl nomodified
   setl readonly
 endfunction
+autocmd BufReadCmd,FileReadCmd,SourceCmd jar:file://* call s:LoadClojureContent(expand("<amatch>"))
+
 
 nnoremap <silent> crcc :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'cycle-coll', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
 nnoremap <silent> crth :call CocRequest('clojure-lsp', 'workspace/executeCommand', {'command': 'thread-first', 'arguments': [Expand('%:p'), line('.') - 1, col('.') - 1]})<CR>
@@ -902,31 +918,6 @@ nnoremap <silent> cref :call CocRequest('clojure-lsp', 'workspace/executeCommand
 " nnoremap gss :SplitjoinSplit<cr>
 " nnoremap gsj :SplitjoinJoin<cr>
 
-
-" ----------------------------------------------------------------------------
-" YCM
-" ----------------------------------------------------------------------------
-" let g:ycm_auto_trigger=1
-
-
-" ----------------------------------------------------------------------------
-" Deoplete
-" ----------------------------------------------------------------------------
-" let g:deoplete#enable_at_startup = 1
-" let g:deoplete#auto_complete = 'false'
-" let g:deoplete#complete_method = 'omnifunc'
-" autocmd FileType css,sass,scss setlocal omnifunc=csscomplete#CompleteCSS
-" call deoplete#custom#option('keyword_patterns', {'clojure': '[\w!$%&*+/:<=>?@\^_~\-\.#]*'})
-" call deoplete#custom#option('min_pattern_length', 5)
-" call deoplete#custom#option('auto_complete_delay', 500)
-
-" autocmd FileType dart call deoplete#custom#buffer_option('auto_complete', v:false)
-
-
-
-" let g:LanguageClient_serverCommands = {
-"     \ 'clojure' : ['bash', '-c', 'clojure-lsp'],
-"     \ }
 
 " ----------------------------------------------------------------------------
 " gruvbox
@@ -989,8 +980,8 @@ command! PlugHelp call fzf#run(fzf#wrap({
 
 " ----------------------------------------------------------------------------
 " Help in new tabs
-" ----------------------------------------------------------------------------
 " function! s:helptab()
+" ----------------------------------------------------------------------------
 "   if &buftype == 'help'
 "     wincmd T
 "     nnoremap <buffer> q :q<cr>
@@ -1033,6 +1024,7 @@ set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe,\\.git  " Windows
 
 "
 au BufNewFile,BufRead *.edn set filetype=clojure
+au BufNewFile,BufRead *.cljd set filetype=clojure
 au BufNewFile,BufRead *.edm set filetype=json
 au BufNewFile,BufRead *.epm set filetype=json
 au BufNewFile,BufRead *.bb set filetype=clojure
@@ -1060,12 +1052,6 @@ let g:EasyMotion_smartcase = 1
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
-" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
-" Or map each action separately
-" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-
 let g:conjure_log_direction = "horizontal"
 let g:conjure_quick_doc_normal_mode=v:false
 let g:conjure_quick_doc_insert_mode=v:false
@@ -1073,35 +1059,6 @@ let g:conjure_log_auto_close=v:false
 let g:conjure_fold_multiline_results=v:false
 let g:conjure_log_blacklist = ["up", "ret", "ret-multiline", "load-file", "eval", "out", "error", "up"]
 
-
-function! s:goyo_enter()
-  if executable('tmux') && strlen($TMUX)
-    silent !tmux set status off
-    silent !tmux list-panes -F '\#F' | grep -q Z || tmux resize-pane -Z
-  endif
-  set noshowmode
-  set noshowcmd
-  set scrolloff=999
-  Limelight
-  " ...
-endfunction
-
-function! s:goyo_leave()
-  if executable('tmux') && strlen($TMUX)
-    silent !tmux set status on
-    silent !tmux list-panes -F '\#F' | grep -q Z && tmux resize-pane -Z
-  endif
-  set showmode
-  set showcmd
-  set scrolloff=5
-  Limelight!
-  " ...
-endfunction
-
-let g:goyo_width=100
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " CoC
 " Use tab for trigger completion with characters ahead and navigate.
@@ -1116,8 +1073,8 @@ inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Make <CR> auto-select the first completion item and notify coc.nvim to
 " format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+"                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -1146,6 +1103,9 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <leader>u <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
+command! -nargs=0 Format :call CocAction('format')
 
 "
 inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1, 1)\<cr>" : "\<Right>"
@@ -1166,9 +1126,6 @@ endfunction
 
 " Highlight the symbol and its references when holding the cursor.
 autocmd CursorHold * silent call CocActionAsync('highlight')
-
-" Symbol renaming.
-nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
 xmap <leader>p  <Plug>(coc-format-selected)
@@ -1254,8 +1211,18 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 let g:golden_ratio_autocommand = 0
 set lazyredraw
 
+
+syntax enable
+filetype plugin indent on
+
+
+colorscheme pop-punk
+" colorscheme shirotelin
+" colorscheme tokyonight
 " colorscheme onehalfdark
-colorscheme PaperColor
+" colorscheme PaperColor
+" colorscheme everforest
+" colorscheme spaceduck
 " colorscheme dracula
 " colorscheme gersak
 " colorscheme rareshack
@@ -1265,3 +1232,9 @@ colorscheme PaperColor
 " colorscheme github
 " colorscheme dracula
 " colorscheme PaperColor
+
+
+let g:terminal_ansi_colors = pop_punk#AnsiColors()
+
+
+
