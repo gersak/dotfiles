@@ -86,7 +86,6 @@ Plug 'iamcco/markdown-preview.nvim', {'do': 'cd app && yarn install'}
 Plug 'kyazdani42/nvim-web-devicons' " for file icons
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'NoahTheDuke/coc-clojure'
 Plug 'jlesquembre/coc-conjure'
 Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 let g:coc_global_extensions = ['coc-conjure']
@@ -130,7 +129,11 @@ Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
 
 " Lint
 " Plug 'metakirby5/codi.vim'
-" Plug 'dense-analysis/ale'
+Plug 'dense-analysis/ale'
+
+
+" Keycloak & FTL
+Plug 'andreshazard/vim-freemarker'
 
 call plug#end()
 endif
